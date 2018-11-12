@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 namespace TCPIPGame
 {
     [Serializable]
-    public class Message
+    public class ClientMessage
     {
         public int MessageID
-        {
-            get;
-            set;
-        }
-        public int ClientSenderID
         {
             get;
             set;
@@ -25,17 +20,16 @@ namespace TCPIPGame
             set;
         }
 
-        public Message(int messageID, int clientSenderID, Object data)
+        public ClientMessage(int messageID, Object data)
         {
             MessageID = messageID;
-            ClientSenderID = clientSenderID;
             TheMessage = data;
 
         }
 
         public override string ToString()
         {
-            return String.Format("MessageID:{0}, ClientSenderID:{1}, TheMessage:{2}", MessageID, ClientSenderID, (string)TheMessage);
+            return String.Format("MessageID:{0}, TheMessage:{1}", MessageID, (string)TheMessage);
 
         }
     }

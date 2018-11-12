@@ -15,6 +15,9 @@ namespace Client
         const int PORT_NO = 80;
         //const string SERVER_IP = "104.168.133.156";
         const string SERVER_IP = "localhost";
+
+
+
         static void Main(string[] args)
         {
             //---data to send to the server---
@@ -23,19 +26,32 @@ namespace Client
             //---create a TCPClient object at the IP and port no.---
             TcpClient client = new TcpClient(SERVER_IP, PORT_NO);
             NetworkStream nwStream = client.GetStream();
-
+            Serializer theSerializer = new Serializer();
 
             while (true)
             {
 
                 if(client.Connected && nwStream.DataAvailable)
                 {
-                    byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+                    var bytesToRead = new byte[client.ReceiveBufferSize];
                      nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize); 
-                    Console.WriteLine("Received : " + new Serializer().FromByteArray<Message>(bytesToRead));
+                    Console.WriteLine("Received : " + theSerializer.FromByteArray<ServerMessage>(bytesToRead));
                 }
 
+                var readLine = "";
+                if(readLine=="0")
+                {
+                    var theMessage = new ClientMessage(MessageIDs.MessageID_CreateGameRoom, "");
+                    var bytesToRead = theSerializer.ObjectToByteArray(theMessage);
+                    nwStream.Write(bytesToRead, 0, bytesToRead.Length);
+                }
 
+                if (readLine == "1")
+                {
+                    var theMessage = new ClientMessage(MessageIDs.MessageID_JoinGameRoom, "");
+                    var bytesToRead = theSerializer.ObjectToByteArray(theMessage);
+                    nwStream.Write(bytesToRead, 0, bytesToRead.Length);
+                }
                 /*
                   
                   var readline = Console.ReadLine();
