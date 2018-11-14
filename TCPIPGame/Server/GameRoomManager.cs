@@ -7,7 +7,7 @@ using TCPIPGame;
 
 namespace TCPIPGame
 {
-    public class GameRoomManager
+    public class GameRoomManager:IManager
     {
         int IDSeed = -1;
         Dictionary<int,GameRoom> GameRooms
@@ -27,15 +27,15 @@ namespace TCPIPGame
             GameClientToGameRoomMap = new Dictionary<int, int>();
         }
 
-        public void CreateRoom()
+        public void CreateRoom(int teamCount)
         {
             IDSeed++;
-            GameRooms.Add(GenerateRoomID(), new GameRoom(2));
+            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount));
         }
 
-        public void AddPlayerToGameRoom(GameClient theClient, int roomID)
+        public void AddPlayerToGameRoom(GameClient theClient, int roomID, int teamID)
         {
-            GameRooms[roomID].AddGameClientToTeam(1, theClient);
+            GameRooms[roomID].AddGameClientToTeam(teamID, theClient);
             GameClientToGameRoomMap.Add(theClient.ID, roomID);
         }
 
@@ -49,13 +49,10 @@ namespace TCPIPGame
             return GameClientToGameRoomMap[clientID];
         }
 
-        private int GenerateRoomID()
+        public int GenerateManageeID()
         {
             IDSeed++;
             return IDSeed;
         }
-
-
-
     }
 }

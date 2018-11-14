@@ -52,8 +52,9 @@ namespace Client
                     var bytesToRead = theSerializer.ObjectToByteArray(theMessage);
                     nwStream.Write(bytesToRead, 0, bytesToRead.Length);
                 }
+
+
                 /*
-                  
                   var readline = Console.ReadLine();
                 if(readline=="0")
                 {

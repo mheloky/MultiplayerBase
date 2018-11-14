@@ -11,10 +11,14 @@ namespace TCPIPGame
 {
     public class Server
     {
+
+        #region Properties
         public delegate void DelegateOnClientMessage(int clientID, ClientMessage data);
         public event DelegateOnClientMessage OnClientMessage;
         public GameClientManager TheGameClientManager=new GameClientManager();
         public GameRoomManager TheGameRoomManager = new GameRoomManager();
+        #endregion
+
         public void Initialize()
         {
             TcpListener server = new TcpListener(IPAddress.Any, 80);
@@ -32,22 +36,24 @@ namespace TCPIPGame
             }
         }
 
-        private void Server_OnClientMessage(int clientID, ClientMessage data)
+        private void Server_OnClientMessage(int clientID, ClientMessage clientDataMessage)
         {
-            if(data.MessageID==MessageIDs.MessageID_CreateGameRoom)
+            if(clientDataMessage.MessageID==MessageIDs.MessageID_CreateGameRoom)
             {
-                TheGameRoomManager.CreateRoom();
-                TheGameRoomManager.AddPlayerToGameRoom(TheGameClientManager.GetGameClientFromID(clientID), 1);
+                TheGameRoomManager.CreateRoom(2);
+                var roomID=TheGameRoomManager.GenerateManageeID();
+                TheGameRoomManager.AddPlayerToGameRoom(TheGameClientManager.GetGameClientFromID(clientID), roomID, 0);
+                var serverMessage = new ServerMessage(MessageIDs.MessageID_JoinGameRoom, clientID, 1);
+                SendDataToGameRoomClients(roomID, serverMessage);
             }
-            if (data.MessageID == MessageIDs.MessageID_JoinGameRoom)
+            if (clientDataMessage.MessageID == MessageIDs.MessageID_JoinGameRoom)
             {
-                TheGameRoomManager.AddPlayerToGameRoom(TheGameClientManager.GetGameClientFromID(clientID), 1);
-                var roomID = TheGameRoomManager.GetClientRoomID(clientID);
-                var message = new ServerMessage(MessageIDs.MessageID_JoinGameRoom, clientID, "");
-                SendDataToGameRoomClients(roomID,message);
+                TheGameRoomManager.AddPlayerToGameRoom(TheGameClientManager.GetGameClientFromID(clientID), (int)clientDataMessage.TheMessage, 1);
+                var sererMessage = new ServerMessage(MessageIDs.MessageID_JoinGameRoom, clientID, clientDataMessage.TheMessage);
+                SendDataToGameRoomClients((int)clientDataMessage.TheMessage, sererMessage);
             }
 
-            if (data.MessageID == MessageIDs.MessageID_MoveAxisX)
+            if (clientDataMessage.MessageID == MessageIDs.MessageID_MoveAxisX)
             {
                 var roomID = TheGameRoomManager.GetClientRoomID(clientID);
                 var message = new ServerMessage(MessageIDs.MessageID_MoveAxisX, clientID, "");
