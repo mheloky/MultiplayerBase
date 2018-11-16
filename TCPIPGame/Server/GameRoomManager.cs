@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using TCPIPGame;
 
 namespace TCPIPGame
@@ -27,19 +27,20 @@ namespace TCPIPGame
             GameClientToGameRoomMap = new Dictionary<int, int>();
         }
 
-        public void CreateRoom(int teamCount)
+        public int CreateRoom(int teamCount)
         {
             IDSeed++;
             GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount));
+            return IDSeed;
         }
 
-        public void AddPlayerToGameRoom(GameClient theClient, int roomID, int teamID)
+        public void AddPlayerToGameRoom(int clientID, int roomID, int teamID)
         {
-            GameRooms[roomID].AddGameClientToTeam(teamID, theClient);
-            GameClientToGameRoomMap.Add(theClient.ID, roomID);
+            GameRooms[roomID].AddGameClientToTeam(teamID, clientID);
+            GameClientToGameRoomMap.Add(clientID, roomID);
         }
 
-        public GameClient[] GetGameClientsInRoom(int roomID)
+        public int[] GetGameClientsInRoom(int roomID)
         {
             return GameRooms[roomID].GetGameClientsInRoom();
         }

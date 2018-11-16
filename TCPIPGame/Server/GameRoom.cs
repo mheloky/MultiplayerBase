@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TCPIPGame
 {
@@ -20,7 +19,7 @@ namespace TCPIPGame
             set;
         }
 
-        Dictionary<int, Dictionary<int,GameClient>> TeamToGameClientsMapping
+        Dictionary<int, List<int>> TeamToGameClientsMapping
         {
             get;
             set;
@@ -29,17 +28,17 @@ namespace TCPIPGame
         public GameRoom(int teamCount)
         {
             TeamCount = teamCount;
-            TeamToGameClientsMapping = new Dictionary<int, Dictionary<int, GameClient>>();
+            TeamToGameClientsMapping = new Dictionary<int, List<int>>();
 
             for (int i = 0; i < TeamCount; i++)
             {
-                TeamToGameClientsMapping.Add(i, new Dictionary<int, GameClient>());
+                TeamToGameClientsMapping.Add(i, new List<int>());
             }
         }
 
-        public void AddGameClientToTeam(int teamNumber, GameClient gameClient)
+        public void AddGameClientToTeam(int teamNumber, int gameClientID)
         {
-            TeamToGameClientsMapping[teamNumber].Add(gameClient.ID,gameClient);
+            TeamToGameClientsMapping[teamNumber].Add(gameClientID);
         }
 
         public void RemoveGameClientFromTeam(int teamNumber,int clientID)
@@ -47,12 +46,12 @@ namespace TCPIPGame
             TeamToGameClientsMapping[teamNumber].Remove(clientID);
         }
 
-        public GameClient[] GetGameClientsInRoom()
+        public int[] GetGameClientsInRoom()
         {
-            List<GameClient> gameClients = new List<GameClient>();
+            List<int> gameClients = new List<int>();
             for(int i=0;i< TeamToGameClientsMapping.Count;i++)
             {
-                gameClients.AddRange(TeamToGameClientsMapping[i].Select(x=>x.Value));
+                gameClients.AddRange(TeamToGameClientsMapping[i]);
             }
 
             return gameClients.ToArray();
