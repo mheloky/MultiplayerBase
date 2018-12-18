@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TCPIPGame
+namespace TCPIPGame.Server
 {
     public class GameRoom
     {
         public int ID
+        {
+            get;
+            set;
+        }
+
+        public string Name
         {
             get;
             set;
@@ -25,9 +31,10 @@ namespace TCPIPGame
             set;
         }
 
-        public GameRoom(int teamCount)
+        public GameRoom(int teamCount, string gameRoomName)
         {
             TeamCount = teamCount;
+            Name = gameRoomName;
             TeamToGameClientsMapping = new Dictionary<int, List<int>>();
 
             for (int i = 0; i < TeamCount; i++)

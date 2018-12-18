@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace TCPIPGame
+namespace TCPIPGame.Server
 {
     [Serializable]
     public class ServerMessage

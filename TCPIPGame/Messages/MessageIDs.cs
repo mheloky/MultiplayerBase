@@ -14,5 +14,7 @@ namespace TCPIPGame
         public static int MessageID_JoinGameRoom = 4;
         public static int MessageID_MoveAxisX = 5;
         public static int MessageID_Mesage = 6;
+
+        public static int MessageID_GetServerGameRooms = 7;
     }
 }

@@ -42,20 +42,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Server\ClientToServerListener.cs" />
-    <Compile Include="Server\ClientToServerMessenger.cs" />
-    <Compile Include="Server\GameClientManager.cs" />
     <Compile Include="Client\GameClient.cs" />
+    <Compile Include="Client\ServerToClientMessageManager.cs" />
+    <Compile Include="Client\ServerToClientListener.cs" />
+    <Compile Include="Messages\MessageCreateGameRoom.cs" />
+    <Compile Include="Server\ClientToServerListener.cs" />
+    <Compile Include="Server\ClientToServerMessageManager.cs" />
+    <Compile Include="Server\GameClientManager.cs" />
+    <Compile Include="Server\GameClient.cs" />
     <Compile Include="Server\GameRoom.cs" />
-    <Compile Include="Server\GameRoomClientsMap.cs" />
     <Compile Include="Server\GameRoomManager.cs" />
     <Compile Include="Client\ClientMessage.cs" />
     <Compile Include="Server\IManager.cs" />
     <Compile Include="Server\ServerMessage.cs" />
-    <Compile Include="MessageIDs.cs" />
+    <Compile Include="Messages\MessageIDs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="Server\Server.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\mheloky\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll
+
+
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

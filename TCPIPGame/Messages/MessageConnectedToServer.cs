@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TCPIPGame.Server
+namespace TCPIPGame.Messages
 {
-    public interface IManager
+    public class MessageConnectedToServer:IMessage
     {
-        int GenerateManageeID();
-
+       
     }
 }

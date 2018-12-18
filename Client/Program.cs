@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 using TCPIPGame;
-using WebSocketSharp;
-
+using TCPIPGame.Client;
 namespace Client
 {
     public class Program
     {
-        const int PORT_NO = 80;
-        //const string SERVER_IP = "104.168.133.156";
-        const string SERVER_IP = "localhost";
-
-
-
         static void Main(string[] args)
         {
-            //---data to send to the server---
+
+            GameClient client = new GameClient();
+            client.OnCreateGameRoomSuccessful += Client_OnCreateGameRoomSuccessful;
+            /* //---data to send to the server---
             string textToSend = DateTime.Now.ToString();
 
             //---create a TCPClient object at the IP and port no.---
@@ -75,6 +67,10 @@ namespace Client
                 Console.ReadLine();
                 client.Close();*/
             }
+
+        private static void Client_OnCreateGameRoomSuccessful(int clientID, bool CreateGameStatus)
+        {
+            Console.WriteLine(string.Format("Client ID:{0} GameCOnnected:{1}",clientID,CreateGameStatus));
         }
     }
-}
+    }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TCPIPGame.Server;
 
-
-namespace TCPIPGame
+namespace TCPIPGame.Server
 {
     public class ClientToServerMessenger
     {
@@ -12,10 +12,10 @@ namespace TCPIPGame
         {
             if (clientDataMessage.MessageID == MessageIDs.MessageID_CreateGameRoom)
             {
-                var roomID = gameRoomManager.CreateRoom(2);
+                var roomID = gameRoomManager.CreateRoom(2, (string)clientDataMessage.TheMessage);
 
                 gameRoomManager.AddPlayerToGameRoom(clientID, roomID, 0);
-                var serverMessage = new ServerMessage(MessageIDs.MessageID_JoinGameRoom, clientID, 1);
+                var serverMessage = new ServerMessage(MessageIDs.MessageID_CreateGameRoom, clientID, 1);
 
                 SendDataToGameRoomClients(roomID, serverMessage, gameRoomManager, gameClientManager);
             }
@@ -34,7 +34,12 @@ namespace TCPIPGame
                 SendDataToGameRoomClients(roomID, message,gameRoomManager,gameClientManager);
             }
 
-
+            if (clientDataMessage.MessageID == MessageIDs.MessageID_GetServerGameRooms)
+            {
+                var roomID = gameRoomManager.
+                var message = new ServerMessage(MessageIDs.MessageID_GetServerGameRooms, clientID, clientDataMessage.TheMessage);
+                SendDataToGameRoomClients(roomID, message, gameRoomManager, gameClientManager);
+            }
         }
 
         public void SendDataToClient(GameClient theGameClient, ServerMessage data)

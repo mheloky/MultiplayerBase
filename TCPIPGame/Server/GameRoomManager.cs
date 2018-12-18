@@ -5,7 +5,7 @@ using System.Text;
 
 using TCPIPGame;
 
-namespace TCPIPGame
+namespace TCPIPGame.Server
 {
     public class GameRoomManager:IManager
     {
@@ -27,10 +27,10 @@ namespace TCPIPGame
             GameClientToGameRoomMap = new Dictionary<int, int>();
         }
 
-        public int CreateRoom(int teamCount)
+        public int CreateRoom(int teamCount, string gameRoomName)
         {
             IDSeed++;
-            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount));
+            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount, gameRoomName));
             return IDSeed;
         }
 
@@ -55,5 +55,7 @@ namespace TCPIPGame
             IDSeed++;
             return IDSeed;
         }
+
+        public List<>
     }
 }

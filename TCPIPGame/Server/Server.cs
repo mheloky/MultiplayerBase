@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 
 
-namespace TCPIPGame
+namespace TCPIPGame.Server
 {
     public class Server
     {
