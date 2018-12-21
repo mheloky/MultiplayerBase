@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TCPIPGame.Server;
 
 namespace TCPIPGame.Messages
 {
-    public class MessageConnectToServerRequest
+    [Serializable]
+    public class MessageConnectToServerRequest:IClientMessage
     {
         public string Name
         {
@@ -16,6 +18,11 @@ namespace TCPIPGame.Messages
         public MessageConnectToServerRequest(string name)
         {
             Name = name;
+        }
+
+        public void Translate(int clientID, IClientToServerMessageTranslator translator)
+        {
+            translator.TranslateMessage(clientID, this);
         }
     }
 }

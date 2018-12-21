@@ -55,7 +55,5 @@ namespace TCPIPGame.Server
             IDSeed++;
             return IDSeed;
         }
-
-        public List<>
     }
 }

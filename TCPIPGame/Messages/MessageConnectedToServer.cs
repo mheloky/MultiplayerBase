@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TCPIPGame.Messages
 {
-    public class MessageConnectedToServer:IMessage
+    public class MessageConnectedToServer//:IMessage
     {
        
     }

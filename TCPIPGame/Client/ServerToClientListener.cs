@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using TCPIPGame.Messages;
 using TCPIPGame.Server;
 
 namespace TCPIPGame.Client
@@ -11,7 +12,7 @@ namespace TCPIPGame.Client
     public class ServerToClientListener
     {
 
-        public delegate void ReceivedServerMessage(ServerMessage theServerMessage);
+        public delegate void ReceivedServerMessage(IServerMessage theServerMessage);
         public event ReceivedServerMessage OnReceivedServerMessage;
 
         public void Listen(TcpClient theCLient)
@@ -28,7 +29,7 @@ namespace TCPIPGame.Client
                     {
                         var bytesToRead = new byte[theCLient.ReceiveBufferSize];
                         nwStream.Read(bytesToRead, 0, theCLient.ReceiveBufferSize);
-                        var serverMessage = theSerializer.FromByteArray<ServerMessage>(bytesToRead);
+                        var serverMessage = theSerializer.FromByteArray<IServerMessage>(bytesToRead);
 
                         if (OnReceivedServerMessage != null)
                         {

@@ -23,7 +23,19 @@ namespace TCPIPGame.Client
             set;
         }
 
+        private ServerToClientMessageTranslator TheServerToClientMessageTranslator
+        {
+            get;
+            set;
+        }
+
         private ServerToClientMessageManager TheServerToClientMessageManager
+        {
+            get;
+            set;
+        }
+
+        public bool IsPreConnected
         {
             get;
             set;
@@ -33,6 +45,12 @@ namespace TCPIPGame.Client
         {
             get;
             set;
+        }
+
+        public int ClientID
+        {
+            get;
+            private set;
         }
 
         const int PORT_NO = 80;
@@ -46,46 +64,73 @@ namespace TCPIPGame.Client
         public event CreateGameRoomSuccessful OnCreateGameRoomSuccessful;
         #endregion
 
+        #region events
+        public delegate void _preConnectedToServerSucessfully(bool preConnectedSucessfully);
+        public event _preConnectedToServerSucessfully PreConnectedToServerSucessfully;
+
+        public delegate void _connectedToServerSucessfully(int clientID);
+        public event _connectedToServerSucessfully ConnectedToServerSucessfully;
+
+        #endregion
+
         public GameClient()
         {
-            TheTcpClient = new TcpClient(SERVER_IP, PORT_NO);
-
+            #region Init
             TheServerToClientMessageManager = new ServerToClientMessageManager();
-
+            TheServerToClientMessageTranslator = new ServerToClientMessageTranslator();
             TheServerToClientListener = new ServerToClientListener();
+            #endregion 
+
+            TheTcpClient = new TcpClient(SERVER_IP, PORT_NO);
             TheServerToClientListener.Listen(TheTcpClient);
 
-            TheServerToClientListener.OnReceivedServerMessage += TheServerToClientMessageManager.Server_OnClientMessage;
-            TheServerToClientMessageManager.OnCreateGameRoomSuccessful += TheServerToClientMessageManager_OnCreateGameRoomSuccessful;
+            TheServerToClientListener.OnReceivedServerMessage += TheServerToClientListener_OnReceivedServerMessage;
+            TheServerToClientMessageTranslator.TranslatedMessageToMessageConnectToServerResponse += TheServerToClientMessageTranslator_TranslatedMessageToMessageConnectToServerResponse;
+            TheServerToClientMessageTranslator.TranslatedMessageToMessagePreConnectToServerResponse += TheServerToClientMessageTranslator_TranslatedMessageToMessagePreConnectToServerResponse;
 
-            TheServerToClientListener.OnReceivedServerMessage += TheServerToClientMessageManager.Server_OnClientMessage;
-            TheServerToClientMessageManager.OnConnectedToServerSuccessfully += TheServerToClientMessageManager_OnConnectedToServerSuccessfully; ;
+            //TheServerToClientMessageManager.OnCreateGameRoomSuccessful += TheServerToClientMessageManager_OnCreateGameRoomSuccessful;
         }
 
-        private void TheServerToClientMessageManager_OnConnectedToServerSuccessfully(int clientID, bool ConnectionStatus)
+        private void TheServerToClientMessageTranslator_TranslatedMessageToMessageConnectToServerResponse(MessageConnectToServerResponse message)
         {
-            IsConnected = true;
-            if (OnConnectedToServerSuccessfully != null)
+            ClientID = message.ClientID;
+            
+            if(ConnectedToServerSucessfully!=null)
             {
-                OnConnectedToServerSuccessfully(clientID, ConnectionStatus);
+                ConnectedToServerSucessfully(message.ClientID);
+            }
+        }
+
+        private void TheServerToClientMessageTranslator_TranslatedMessageToMessagePreConnectToServerResponse(MessagePreConnectToServerResponse message)
+        {
+            var preConnectedSucesfully = message.Connected;
+            IsPreConnected = preConnectedSucesfully;
+            if (PreConnectedToServerSucessfully != null)
+            {
+                PreConnectedToServerSucessfully(preConnectedSucesfully);
             }
         }
 
         private void TheServerToClientMessageManager_OnCreateGameRoomSuccessful(int clientID, bool CreateGameStatus)
         {
-            
             if (OnCreateGameRoomSuccessful != null)
             {
                 OnCreateGameRoomSuccessful(clientID, CreateGameStatus);
             }
         }
 
-        public void SendMessage(IMessage theClientMessage)
+        public void SendMessageToServer(IClientMessage theClientMessage)
         {
             var nwStream = TheTcpClient.GetStream();
             var theSerializer = new Serializer();
             var bytesToRead = theSerializer.ObjectToByteArray(theClientMessage);
             nwStream.Write(bytesToRead, 0, bytesToRead.Length);
         }
+
+        private void TheServerToClientListener_OnReceivedServerMessage(IServerMessage theServerMessage)
+        {
+            TheServerToClientMessageTranslator.TranslateMessage(theServerMessage);
+        }
+
     }
 }

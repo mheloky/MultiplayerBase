@@ -11,7 +11,8 @@ namespace Client
         {
 
             GameClient client = new GameClient();
-            client.OnCreateGameRoomSuccessful += Client_OnCreateGameRoomSuccessful;
+            client.PreConnectedToServerSucessfully += Client_PreConnectedToServerSucessfully;
+            //client.OnCreateGameRoomSuccessful += Client_OnCreateGameRoomSuccessful;
             /* //---data to send to the server---
             string textToSend = DateTime.Now.ToString();
 
@@ -67,6 +68,11 @@ namespace Client
                 Console.ReadLine();
                 client.Close();*/
             }
+
+        private static void Client_PreConnectedToServerSucessfully(bool preConnectedSucessfully)
+        {
+            Console.WriteLine(string.Format("Client preconnected"));
+        }
 
         private static void Client_OnCreateGameRoomSuccessful(int clientID, bool CreateGameStatus)
         {
