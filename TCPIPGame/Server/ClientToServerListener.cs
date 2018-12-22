@@ -25,9 +25,6 @@ namespace TCPIPGame.Server
 
                         if (msg.Any(x => x != 0))
                         {
-                            
-
-
                             var message = new Serializer().FromByteArray<IClientMessage>(msg);
 
                             Console.WriteLine(message); //now , we write the message as string

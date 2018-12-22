@@ -34,7 +34,7 @@ namespace TCPIPGame.Server
             }
         }
 
-        public void Server_OnClientMessage(int clientID, ClientMessage clientDataMessage, GameRoomManager gameRoomManager, GameClientManager gameClientManager) 
+        public void Server_OnClientMessage() 
         {
             /*if (clientDataMessage.MessageID == MessageIDs.MessageID_CreateGameRoom)
             {

@@ -11,6 +11,10 @@ namespace TCPIPGame.Client
     public class GameClient
     {
         #region Properties
+        const int _portNumber = 80;
+        //const string SERVER_IP = "104.168.133.156";
+        const string _serverIP = "localhost";
+
         private TcpClient TheTcpClient
         {
             get;
@@ -52,71 +56,33 @@ namespace TCPIPGame.Client
             get;
             private set;
         }
+        #endregion
 
-        const int PORT_NO = 80;
-        //const string SERVER_IP = "104.168.133.156";
-        const string SERVER_IP = "localhost";
+        #region events
+        public delegate void _preConnectedToServerSucessfully(bool preConnectedSucessfully);
+        /// <summary>
+        /// Initial call to the server to see if the server will take requests
+        /// </summary>
+        public event _preConnectedToServerSucessfully OnPreConnectedToServerResponseReceived;
 
-        public delegate void ConnectedToServerSuccessfully(int clientID, bool ConnectionStatus);
-        public event ConnectedToServerSuccessfully OnConnectedToServerSuccessfully;
+        public delegate void _connectedToServerSucessfully(int clientID, bool preConnectedSucessfully);
+        /// <summary>
+        /// The server has taken your request to join it
+        /// </summary>
+        public event _connectedToServerSucessfully OnConnectedToServerResponseReceived;
 
         public delegate void CreateGameRoomSuccessful(int clientID, bool CreateGameStatus);
         public event CreateGameRoomSuccessful OnCreateGameRoomSuccessful;
         #endregion
 
-        #region events
-        public delegate void _preConnectedToServerSucessfully(bool preConnectedSucessfully);
-        public event _preConnectedToServerSucessfully PreConnectedToServerSucessfully;
-
-        public delegate void _connectedToServerSucessfully(int clientID);
-        public event _connectedToServerSucessfully ConnectedToServerSucessfully;
-
-        #endregion
-
         public GameClient()
         {
-            #region Init
-            TheServerToClientMessageManager = new ServerToClientMessageManager();
-            TheServerToClientMessageTranslator = new ServerToClientMessageTranslator();
-            TheServerToClientListener = new ServerToClientListener();
-            #endregion 
+            Init();
 
-            TheTcpClient = new TcpClient(SERVER_IP, PORT_NO);
+            TheTcpClient = new TcpClient(_serverIP, _portNumber);
             TheServerToClientListener.Listen(TheTcpClient);
 
-            TheServerToClientListener.OnReceivedServerMessage += TheServerToClientListener_OnReceivedServerMessage;
-            TheServerToClientMessageTranslator.TranslatedMessageToMessageConnectToServerResponse += TheServerToClientMessageTranslator_TranslatedMessageToMessageConnectToServerResponse;
-            TheServerToClientMessageTranslator.TranslatedMessageToMessagePreConnectToServerResponse += TheServerToClientMessageTranslator_TranslatedMessageToMessagePreConnectToServerResponse;
-
-            //TheServerToClientMessageManager.OnCreateGameRoomSuccessful += TheServerToClientMessageManager_OnCreateGameRoomSuccessful;
-        }
-
-        private void TheServerToClientMessageTranslator_TranslatedMessageToMessageConnectToServerResponse(MessageConnectToServerResponse message)
-        {
-            ClientID = message.ClientID;
-            
-            if(ConnectedToServerSucessfully!=null)
-            {
-                ConnectedToServerSucessfully(message.ClientID);
-            }
-        }
-
-        private void TheServerToClientMessageTranslator_TranslatedMessageToMessagePreConnectToServerResponse(MessagePreConnectToServerResponse message)
-        {
-            var preConnectedSucesfully = message.Connected;
-            IsPreConnected = preConnectedSucesfully;
-            if (PreConnectedToServerSucessfully != null)
-            {
-                PreConnectedToServerSucessfully(preConnectedSucesfully);
-            }
-        }
-
-        private void TheServerToClientMessageManager_OnCreateGameRoomSuccessful(int clientID, bool CreateGameStatus)
-        {
-            if (OnCreateGameRoomSuccessful != null)
-            {
-                OnCreateGameRoomSuccessful(clientID, CreateGameStatus);
-            }
+            SetupEvents();
         }
 
         public void SendMessageToServer(IClientMessage theClientMessage)
@@ -127,10 +93,70 @@ namespace TCPIPGame.Client
             nwStream.Write(bytesToRead, 0, bytesToRead.Length);
         }
 
-        private void TheServerToClientListener_OnReceivedServerMessage(IServerMessage theServerMessage)
+        /// <summary>
+        /// Messages Received from Server Gets Translated
+        /// </summary>
+        /// <param name="theServerMessage"></param>
+        private void OnReceivedServerMessage(IServerMessage theServerMessage)
         {
             TheServerToClientMessageTranslator.TranslateMessage(theServerMessage);
         }
 
+        #region Helper Methods
+
+        #region Setup
+        /// <summary>
+        /// Initialized Variables
+        /// </summary>
+        private void Init()
+        {
+            TheServerToClientMessageManager = new ServerToClientMessageManager();
+            TheServerToClientMessageTranslator = new ServerToClientMessageTranslator();
+            TheServerToClientListener = new ServerToClientListener();
+        }
+
+        /// <summary>
+        /// Setups The Events to Trigger
+        /// </summary>
+        private void SetupEvents()
+        {
+            TheServerToClientListener.OnReceivedServerMessage += OnReceivedServerMessage;
+            TheServerToClientMessageTranslator.TranslatedMessageToMessageConnectToServerResponse += Trigger_OnConnectedToServerResponseReceived;
+            TheServerToClientMessageTranslator.TranslatedMessageToMessagePreConnectToServerResponse += Trigger_OnPreConnectedToServerResponseReceived;
+            //TheServerToClientMessageManager.OnCreateGameRoomSuccessful += TheServerToClientMessageManager_OnCreateGameRoomSuccessful;
+        }
+        #endregion
+
+        #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
+        private void Trigger_OnConnectedToServerResponseReceived(MessageConnectToServerResponse message)
+        {
+            ClientID = message.ClientID;
+
+            if (OnConnectedToServerResponseReceived != null)
+            {
+                OnConnectedToServerResponseReceived(message.ClientID, true);
+            }
+        }
+
+        private void Trigger_OnPreConnectedToServerResponseReceived(MessagePreConnectToServerResponse message)
+        {
+            var preConnectedSucesfully = message.Connected;
+            IsPreConnected = preConnectedSucesfully;
+            if (OnPreConnectedToServerResponseReceived != null)
+            {
+                OnPreConnectedToServerResponseReceived(preConnectedSucesfully);
+            }
+        }
+
+        private void Trigger_OnCreateGameRoomSuccessful(int clientID, bool CreateGameStatus)
+        {
+            if (OnCreateGameRoomSuccessful != null)
+            {
+                OnCreateGameRoomSuccessful(clientID, CreateGameStatus);
+            }
+        }
+        #endregion
+
+        #endregion
     }
 }

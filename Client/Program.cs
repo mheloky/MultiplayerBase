@@ -3,6 +3,8 @@ using System.Net.Sockets;
 
 using TCPIPGame;
 using TCPIPGame.Client;
+using TCPIPGame.Messages;
+
 namespace Client
 {
     public class Program
@@ -11,7 +13,10 @@ namespace Client
         {
 
             GameClient client = new GameClient();
-            client.PreConnectedToServerSucessfully += Client_PreConnectedToServerSucessfully;
+            client.OnPreConnectedToServerResponseReceived += Client_PreConnectedToServerSucessfully;
+            client.OnConnectedToServerResponseReceived += Client_ConnectedToServerSucessfully;
+
+            client.SendMessageToServer(new MessageConnectToServerRequest("Robot1"));
             //client.OnCreateGameRoomSuccessful += Client_OnCreateGameRoomSuccessful;
             /* //---data to send to the server---
             string textToSend = DateTime.Now.ToString();
@@ -67,7 +72,12 @@ namespace Client
                 Console.WriteLine("Received : " + Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
                 Console.ReadLine();
                 client.Close();*/
-            }
+        }
+
+        private static void Client_ConnectedToServerSucessfully(int clientID, bool connectionStatus)
+        {
+            Console.WriteLine(string.Format("Client connected"));
+        }
 
         private static void Client_PreConnectedToServerSucessfully(bool preConnectedSucessfully)
         {
