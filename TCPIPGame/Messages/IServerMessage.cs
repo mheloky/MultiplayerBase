@@ -7,8 +7,8 @@ using TCPIPGame.Server;
 
 namespace TCPIPGame.Messages
 {
-    public interface IServerMessage
+    public abstract class AServerMessage:EventArgs
     {
-        void Translate(IServerToClientMessageTranslator translator);
+        public abstract void Translate(IServerToClientMessageTranslator translator);
     }
 }

@@ -8,8 +8,11 @@ namespace TCPIPGame.Client
 {
     public interface IServerToClientMessageTranslator
     {
-        void TranslateMessage(IServerMessage message);
+        void TranslateMessage(AServerMessage message);
         void TranslateMessage(MessagePreConnectToServerResponse message);
         void TranslateMessage(MessageConnectToServerResponse message);
+
+        event EventHandler<MessagePreConnectToServerResponse> Event_OnPreConnectToServerResponseTranslated;
+        event EventHandler<MessageConnectToServerResponse> Event_OnConnectToServerResponseTranslated;
     }
 }

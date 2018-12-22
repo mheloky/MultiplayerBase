@@ -8,7 +8,7 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessageConnectToServerResponse:IServerMessage
+    public class MessageConnectToServerResponse: AServerMessage
     {
         public int ClientID
         {
@@ -21,7 +21,7 @@ namespace TCPIPGame.Messages
             ClientID = clientID;
         }
 
-        public void Translate(IServerToClientMessageTranslator translator)
+        public override void Translate(IServerToClientMessageTranslator translator)
         {
             translator.TranslateMessage(this);
         }

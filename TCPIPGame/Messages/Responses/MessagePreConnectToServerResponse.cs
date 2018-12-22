@@ -8,7 +8,7 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessagePreConnectToServerResponse:IServerMessage
+    public class MessagePreConnectToServerResponse: AServerMessage
     {
         public bool Connected
         {
@@ -21,7 +21,7 @@ namespace TCPIPGame.Messages
             Connected = connected;
         }
 
-        public void Translate(IServerToClientMessageTranslator translator)
+        public override void Translate(IServerToClientMessageTranslator translator)
         {
             translator.TranslateMessage(this);
         }

@@ -8,7 +8,7 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessageCreateRoomResponse : IServerMessage
+    public class MessageCreateRoomResponse : AServerMessage
     {
         public string RoomName
         {
@@ -21,7 +21,7 @@ namespace TCPIPGame.Messages
             RoomName = roomName;
         }
 
-        public void Translate(IServerToClientMessageTranslator translator)
+        public override void Translate(IServerToClientMessageTranslator translator)
         {
             translator.TranslateMessage(this);
         }

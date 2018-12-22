@@ -1,39 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
+using TCPIPGame.Messages;
 using TCPIPGame.Server;
 
 namespace TCPIPGame.Client
 {
     public class ServerToClientMessageManager
     {
-        public delegate void ConnectedToServerSuccessfully(int clientID, bool ConnectionStatus);
-        public event ConnectedToServerSuccessfully OnConnectedToServerSuccessfully;
-
-        public delegate void CreateGameRoomSuccessful(int clientID, bool CreateGameStatus);
-        public event CreateGameRoomSuccessful OnCreateGameRoomSuccessful;
-
-        public delegate void JoinGameRoomSuccessful(int clientID, int roomID);
-        public event JoinGameRoomSuccessful OnJoinGameRoomSuccessful;
-
-        public void Server_OnClientMessage(ServerMessage serverDataMessage)
+        #region Properties
+        private TcpClient TheTcpClient
         {
-            if (OnConnectedToServerSuccessfully != null && serverDataMessage.MessageID == MessageIDs.MessageID_ClientSuccesfullyConnected)
-            {
-                OnConnectedToServerSuccessfully(serverDataMessage.ClientSenderID, true);
-            }
+            get;
+            set;
+        }
+        private IServerToClientMessageTranslator TheServerToClientMessageTranslator
+        {
+            get;
+            set;
+        }
 
-            if (OnCreateGameRoomSuccessful!=null && serverDataMessage.MessageID == MessageIDs.MessageID_CreateGameRoom)
-            {
-                OnCreateGameRoomSuccessful(serverDataMessage.ClientSenderID, true);
-            }
+        private IServerToClientMessageListener TheServerToClientMessageListener
+        {
+            get;
+            set;
+        }
+        #endregion
 
-            if (OnJoinGameRoomSuccessful!=null && serverDataMessage.MessageID == MessageIDs.MessageID_JoinGameRoom)
-            {
-                var roomID=(int)serverDataMessage.TheMessage;
-                OnJoinGameRoomSuccessful(serverDataMessage.ClientSenderID, roomID);
-            }
+        public ServerToClientMessageManager(TcpClient client, IServerToClientMessageTranslator serverToClientMessageTranslator)
+        {
+            TheTcpClient = client;
+            TheServerToClientMessageListener = new ServerToClientMessageListener() ;
+            TheServerToClientMessageListener.OnReceivedServerMessage += OnReceivedServerMessage;
+            TheServerToClientMessageTranslator = serverToClientMessageTranslator;
+            TheServerToClientMessageListener.ListenAsync(client);
+        }
+
+        private void OnReceivedServerMessage(object sender, AServerMessage theServerMessage)
+        {
+            TheServerToClientMessageTranslator.TranslateMessage(theServerMessage);
+            
+        }
+
+        public void SendMessageToServer(IClientMessage theClientMessage)
+        {
+            var nwStream = TheTcpClient.GetStream();
+            var theSerializer = new Serializer();
+            var bytesToRead = theSerializer.ObjectToByteArray(theClientMessage);
+            nwStream.Write(bytesToRead, 0, bytesToRead.Length);
         }
     }
 }

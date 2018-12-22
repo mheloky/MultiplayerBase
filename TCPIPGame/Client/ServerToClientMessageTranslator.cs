@@ -8,28 +8,28 @@ namespace TCPIPGame.Client
 {
     public class ServerToClientMessageTranslator : IServerToClientMessageTranslator
     {
-        public delegate void _TranslatedMessageToMessagePreConnectToServerResponse(MessagePreConnectToServerResponse message);
-        public delegate void _TranslatedMessageToMessageConnectToServerResponse(MessageConnectToServerResponse message);
-        public event _TranslatedMessageToMessageConnectToServerResponse TranslatedMessageToMessageConnectToServerResponse;
-        public event _TranslatedMessageToMessagePreConnectToServerResponse TranslatedMessageToMessagePreConnectToServerResponse;
+        #region Events
+        public event EventHandler<MessagePreConnectToServerResponse> Event_OnPreConnectToServerResponseTranslated;
+        public event EventHandler<MessageConnectToServerResponse> Event_OnConnectToServerResponseTranslated;
+        #endregion
 
         public void TranslateMessage(MessagePreConnectToServerResponse message)
         {
-            if(TranslatedMessageToMessagePreConnectToServerResponse != null)
+            if(Event_OnPreConnectToServerResponseTranslated != null)
             {
-                TranslatedMessageToMessagePreConnectToServerResponse(message);
+                Event_OnPreConnectToServerResponseTranslated(null,message);
             }
         }
 
         public void TranslateMessage(MessageConnectToServerResponse message)
         {
-            if (TranslatedMessageToMessageConnectToServerResponse != null)
+            if (Event_OnConnectToServerResponseTranslated != null)
             {
-                TranslatedMessageToMessageConnectToServerResponse(message);
+                Event_OnConnectToServerResponseTranslated(null,message);
             }
         }
 
-        public void TranslateMessage(IServerMessage message)
+        public void TranslateMessage(AServerMessage message)
         {
             message.Translate(this);
         }

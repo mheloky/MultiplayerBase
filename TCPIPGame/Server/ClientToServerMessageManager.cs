@@ -16,7 +16,7 @@ namespace TCPIPGame.Server
             SendDataToClient(gameClient, messageResponseWithClientID);
         }
 
-        public void SendDataToClient(GameClient theGameClient, IServerMessage data)
+        public void SendDataToClient(GameClient theGameClient, AServerMessage data)
         {
             Serializer serializer = new Serializer();
             var theData = serializer.ObjectToByteArray(data);
