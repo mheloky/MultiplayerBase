@@ -15,7 +15,7 @@ namespace TCPIPGame.Client
         //const string SERVER_IP = "104.168.133.156";
         const string _serverIP = "localhost";
 
-        public GameClientStatus TheGameClientStatus
+        public IGameClientStatus TheGameClientStatus
         {
             get;
             private set;
@@ -25,17 +25,12 @@ namespace TCPIPGame.Client
             get;
             set;
         }
-        private ServerToClientMessageManager TheServerToClientMessageManager
+        private IServerToClientMessageManager TheServerToClientMessageManager
         {
             get;
             set;
         }
         private IServerToClientMessageTranslator TheServerToClientMessageTranslator
-        {
-            get;
-            set;
-        }
-        private ServerToClientMessageListener TheServerToClientListener
         {
             get;
             set;
@@ -62,7 +57,7 @@ namespace TCPIPGame.Client
         {
             TheGameClientStatus = new GameClientStatus();
             TheTcpClient = new TcpClient(_serverIP, _portNumber);
-            TheServerToClientMessageManager = new ServerToClientMessageManager(TheTcpClient, TheServerToClientListener, TheServerToClientMessageTranslator);
+            TheServerToClientMessageManager = new ServerToClientMessageManager(TheTcpClient, TheServerToClientMessageTranslator);
 
             SetupEvents();
         }
@@ -70,13 +65,13 @@ namespace TCPIPGame.Client
         #region Helper Methods
         private void SetupEvents()
         {
-            TheServerToClientMessageTranslator.TranslatedMessageToMessageConnectToServerResponse += Trigger_OnConnectedToServerResponseReceived;
-            TheServerToClientMessageTranslator.TranslatedMessageToMessagePreConnectToServerResponse += Trigger_OnPreConnectedToServerResponseReceived;
+            TheServerToClientMessageTranslator.Event_OnPreConnectToServerResponseTranslated += Trigger_OnPreConnectedToServerResponseReceived;
+            TheServerToClientMessageTranslator.Event_OnConnectToServerResponseTranslated += Trigger_OnConnectedToServerResponseReceived;
             //TheServerToClientMessageManager.OnCreateGameRoomSuccessful += TheServerToClientMessageManager_OnCreateGameRoomSuccessful;
         }
         #endregion
         #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
-        private void Trigger_OnConnectedToServerResponseReceived(MessageConnectToServerResponse message)
+        private void Trigger_OnConnectedToServerResponseReceived(object sender, MessageConnectToServerResponse message)
         {
             TheGameClientStatus.ClientID = message.ClientID;
 
@@ -86,7 +81,7 @@ namespace TCPIPGame.Client
             }
         }
 
-        private void Trigger_OnPreConnectedToServerResponseReceived(MessagePreConnectToServerResponse message)
+        private void Trigger_OnPreConnectedToServerResponseReceived(object sender, MessagePreConnectToServerResponse message)
         {
             var preConnectedSucesfully = message.Connected;
             TheGameClientStatus.IsPreConnected = preConnectedSucesfully;

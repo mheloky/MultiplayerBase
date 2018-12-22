@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\AServerToClientMessageManager.cs" />
     <Compile Include="Client\GameClientStatus.cs" />
     <Compile Include="Client\IGameClientStatus.cs" />
     <Compile Include="Client\IServerToClientMessageListener.cs" />

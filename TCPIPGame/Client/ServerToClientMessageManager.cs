@@ -8,7 +8,7 @@ using TCPIPGame.Server;
 
 namespace TCPIPGame.Client
 {
-    public class ServerToClientMessageManager
+    public class ServerToClientMessageManager: IServerToClientMessageManager
     {
         #region Properties
         private TcpClient TheTcpClient
