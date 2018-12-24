@@ -9,7 +9,7 @@ using TCPIPGame.Server;
 
 namespace TCPIPGame.Client
 {
-    public class ServerToClientMessageListener: IServerToClientMessageListener
+    public class ServerToClientMessageListener: AServerToClientMessageListener
     {
         #region Events
         public event EventHandler<AServerMessage> OnReceivedServerMessage;

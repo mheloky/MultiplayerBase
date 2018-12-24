@@ -21,7 +21,7 @@ namespace TCPIPGame.Messages
             RoomName = roomName;
         }
 
-        public override void Translate(IServerToClientMessageTranslator translator)
+        public override void Translate(AServerToClientMessageTranslator translator)
         {
             translator.TranslateMessage(this);
         }

@@ -6,7 +6,7 @@ using TCPIPGame.Messages;
 
 namespace TCPIPGame.Client
 {
-    public interface IServerToClientMessageTranslator
+    public interface AServerToClientMessageTranslator
     {
         void TranslateMessage(AServerMessage message);
         void TranslateMessage(MessagePreConnectToServerResponse message);

@@ -15,7 +15,7 @@ namespace TCPIPGame.Client
         //const string SERVER_IP = "104.168.133.156";
         const string _serverIP = "localhost";
 
-        public IGameClientStatus TheGameClientStatus
+        public AGameClientStatus TheGameClientStatus
         {
             get;
             private set;

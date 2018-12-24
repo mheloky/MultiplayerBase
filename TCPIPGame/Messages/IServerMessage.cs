@@ -9,6 +9,6 @@ namespace TCPIPGame.Messages
 {
     public abstract class AServerMessage:EventArgs
     {
-        public abstract void Translate(IServerToClientMessageTranslator translator);
+        public abstract void Translate(AServerToClientMessageTranslator translator);
     }
 }

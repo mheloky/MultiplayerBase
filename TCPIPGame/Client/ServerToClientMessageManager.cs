@@ -16,20 +16,20 @@ namespace TCPIPGame.Client
             get;
             set;
         }
-        private IServerToClientMessageTranslator TheServerToClientMessageTranslator
+        private AServerToClientMessageTranslator TheServerToClientMessageTranslator
         {
             get;
             set;
         }
 
-        private IServerToClientMessageListener TheServerToClientMessageListener
+        private AServerToClientMessageListener TheServerToClientMessageListener
         {
             get;
             set;
         }
         #endregion
 
-        public ServerToClientMessageManager(TcpClient client, IServerToClientMessageTranslator serverToClientMessageTranslator)
+        public ServerToClientMessageManager(TcpClient client, AServerToClientMessageTranslator serverToClientMessageTranslator)
         {
             TheTcpClient = client;
             TheServerToClientMessageListener = new ServerToClientMessageListener() ;

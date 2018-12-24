@@ -5,24 +5,40 @@ using System.Text;
 
 namespace TCPIPGame.Client
 {
-    public class GameClientStatus : IGameClientStatus
+    public class GameClientStatus : AGameClientStatus
     {
-        public bool IsPreConnected
+        private int _clientID;
+        private bool _isConnected;
+        private bool _isPreConnected;
+
+        public int GetClientID()
         {
-            get;
-            internal set;
+            return _clientID;
         }
 
-        public bool IsConnected
+        public bool GetIsConnected()
         {
-            get;
-            internal set;
+            return _isConnected;
         }
 
-        public int ClientID
+        public bool GetIsPreConnected()
         {
-            get;
-            internal set;
+            return _isPreConnected;
+        }
+
+        internal void SetClientID(int id)
+        {
+            _clientID = id;
+        }
+
+        internal void SetIsPreConnected(bool isPreconnected)
+        {
+            _isPreConnected = isPreconnected;
+        }
+
+        internal void SetIsConnected(bool isConnected)
+        {
+            _isConnected = isConnected;
         }
     }
 }

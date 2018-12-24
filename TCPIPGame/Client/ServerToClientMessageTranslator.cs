@@ -6,7 +6,7 @@ using TCPIPGame.Messages;
 
 namespace TCPIPGame.Client
 {
-    public class ServerToClientMessageTranslator : IServerToClientMessageTranslator
+    public class ServerToClientMessageTranslator : AServerToClientMessageTranslator
     {
         #region Events
         public event EventHandler<MessagePreConnectToServerResponse> Event_OnPreConnectToServerResponseTranslated;

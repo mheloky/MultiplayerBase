@@ -7,7 +7,7 @@ using TCPIPGame.Messages;
 
 namespace TCPIPGame.Client
 {
-    interface IServerToClientMessageListener
+    interface AServerToClientMessageListener
     {
         event EventHandler<AServerMessage> OnReceivedServerMessage;
         void ListenAsync(TcpClient theCLient);
