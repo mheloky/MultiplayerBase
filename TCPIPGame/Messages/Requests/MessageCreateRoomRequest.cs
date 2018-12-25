@@ -7,7 +7,7 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessageCreateRoomRequest : IClientMessage
+    public class MessageCreateRoomRequest : AClientMessage
     {
         public string RoomName
         {
@@ -20,7 +20,7 @@ namespace TCPIPGame.Messages
             RoomName = roomName;
         }
 
-        public void Translate(int clientID, IClientToServerMessageTranslator translator)
+        public void Translate(int clientID, AClientToServerMessageTranslator translator)
         {
             translator.TranslateMessage(clientID, this);
         }

@@ -30,7 +30,7 @@ namespace TCPIPGame.Client
             get;
             set;
         }
-        private IServerToClientMessageTranslator TheServerToClientMessageTranslator
+        private AServerToClientMessageTranslator TheServerToClientMessageTranslator
         {
             get;
             set;
@@ -62,6 +62,11 @@ namespace TCPIPGame.Client
             SetupEvents();
         }
 
+        public void SetMessage(AClientMessage message)
+        {
+            TheServerToClientMessageManager.SendMessageToServer(message);
+        }
+
         #region Helper Methods
         private void SetupEvents()
         {
@@ -73,7 +78,7 @@ namespace TCPIPGame.Client
         #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
         private void Trigger_OnConnectedToServerResponseReceived(object sender, MessageConnectToServerResponse message)
         {
-            TheGameClientStatus.ClientID = message.ClientID;
+            TheGameClientStatus.SetClientID(message.ClientID);
 
             if (OnConnectedToServerResponseReceived != null)
             {
@@ -84,7 +89,7 @@ namespace TCPIPGame.Client
         private void Trigger_OnPreConnectedToServerResponseReceived(object sender, MessagePreConnectToServerResponse message)
         {
             var preConnectedSucesfully = message.Connected;
-            TheGameClientStatus.IsPreConnected = preConnectedSucesfully;
+            TheGameClientStatus.SetIsPreConnected(preConnectedSucesfully);
             if (OnPreConnectedToServerResponseReceived != null)
             {
                 OnPreConnectedToServerResponseReceived(preConnectedSucesfully);

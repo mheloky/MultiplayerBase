@@ -7,7 +7,7 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessagePreConnectToServerRequest:IClientMessage
+    public class MessagePreConnectToServerRequest:AClientMessage
     {
         public string Name
         {
@@ -20,7 +20,7 @@ namespace TCPIPGame.Messages
             Name = name;
         }
 
-        public void Translate(int clientID, IClientToServerMessageTranslator translator)
+        public void Translate(int clientID, AClientToServerMessageTranslator translator)
         {
             translator.TranslateMessage(clientID, this);
         }

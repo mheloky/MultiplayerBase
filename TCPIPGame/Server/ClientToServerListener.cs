@@ -9,7 +9,7 @@ namespace TCPIPGame.Server
 {
     public class ClientToServerListener
     {
-        public delegate void DelegateOnClientMessage(int clientID, IClientMessage message);
+        public delegate void DelegateOnClientMessage(int clientID, AClientMessage message);
         public event DelegateOnClientMessage OnClientMessage;
 
         public void ListenToClient(GameClient client)
@@ -25,7 +25,7 @@ namespace TCPIPGame.Server
 
                         if (msg.Any(x => x != 0))
                         {
-                            var message = new Serializer().FromByteArray<IClientMessage>(msg);
+                            var message = new Serializer().FromByteArray<AClientMessage>(msg);
 
                             Console.WriteLine(message); //now , we write the message as string
                             if (OnClientMessage != null)

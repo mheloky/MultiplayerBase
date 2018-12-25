@@ -44,7 +44,7 @@ namespace TCPIPGame.Client
             
         }
 
-        public void SendMessageToServer(IClientMessage theClientMessage)
+        public void SendMessageToServer(AClientMessage theClientMessage)
         {
             var nwStream = TheTcpClient.GetStream();
             var theSerializer = new Serializer();

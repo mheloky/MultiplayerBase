@@ -11,32 +11,32 @@ namespace TCPIPGame.Client
         private bool _isConnected;
         private bool _isPreConnected;
 
-        public int GetClientID()
+        public override int GetClientID()
         {
             return _clientID;
         }
 
-        public bool GetIsConnected()
+        public override bool GetIsConnected()
         {
             return _isConnected;
         }
 
-        public bool GetIsPreConnected()
+        public override bool GetIsPreConnected()
         {
             return _isPreConnected;
         }
 
-        internal void SetClientID(int id)
+        internal override void SetClientID(int id)
         {
             _clientID = id;
         }
 
-        internal void SetIsPreConnected(bool isPreconnected)
+        internal override void SetIsPreConnected(bool isPreconnected)
         {
             _isPreConnected = isPreconnected;
         }
 
-        internal void SetIsConnected(bool isConnected)
+        internal override void SetIsConnected(bool isConnected)
         {
             _isConnected = isConnected;
         }

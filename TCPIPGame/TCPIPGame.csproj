@@ -42,17 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\AGameClientStatus.cs" />
+    <Compile Include="Client\AServerToClientMessageListener.cs" />
     <Compile Include="Client\AServerToClientMessageManager.cs" />
+    <Compile Include="Client\AServerToClientMessageTranslator.cs" />
     <Compile Include="Client\GameClientStatus.cs" />
-    <Compile Include="Client\IGameClientStatus.cs" />
-    <Compile Include="Client\IServerToClientMessageListener.cs" />
-    <Compile Include="Client\IServerToClientMessageTranslator.cs" />
     <Compile Include="Client\ServerToClientMessageTranslator.cs" />
     <Compile Include="Client\GameClient.cs" />
     <Compile Include="Client\ServerToClientMessageManager.cs" />
     <Compile Include="Client\ServerToClientMessageListener.cs" />
-    <Compile Include="Messages\IServerMessage.cs" />
-    <Compile Include="Messages\IClientMessage.cs" />
+    <Compile Include="Messages\AServerMessage.cs" />
+    <Compile Include="Messages\AClientMessage.cs" />
     <Compile Include="Messages\MessageConnectedToServer.cs" />
     <Compile Include="Messages\Requests\MessageCreateRoomRequest.cs" />
     <Compile Include="Messages\Requests\MessagePreConnectToServerRequest.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Server\GameRoom.cs" />
     <Compile Include="Server\GameRoomManager.cs" />
     <Compile Include="Server\IManager.cs" />
-    <Compile Include="Server\IClientToServerMessageTranslator.cs" />
+    <Compile Include="Server\AClientToServerMessageTranslator.cs" />
     <Compile Include="Server\ServerMessage.cs" />
     <Compile Include="Messages\MessageIDs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

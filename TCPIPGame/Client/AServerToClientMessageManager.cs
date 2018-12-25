@@ -8,6 +8,6 @@ namespace TCPIPGame.Client
 {
     public interface IServerToClientMessageManager
     {
-        void SendMessageToServer(IClientMessage theClientMessage);
+        void SendMessageToServer(AClientMessage theClientMessage);
     }
 }

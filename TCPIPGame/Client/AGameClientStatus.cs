@@ -5,10 +5,13 @@ using System.Text;
 
 namespace TCPIPGame.Client
 {
-    public interface AGameClientStatus
+    public abstract class AGameClientStatus
     {
-        bool GetIsPreConnected();
-        bool GetIsConnected();
-        int GetClientID();
+        public abstract bool GetIsPreConnected();
+        public abstract bool GetIsConnected();
+        public abstract int GetClientID();
+        abstract internal void SetClientID(int id);
+        abstract internal void SetIsPreConnected(bool isPreconnected);
+        abstract internal void SetIsConnected(bool isConnected);
     }
 }

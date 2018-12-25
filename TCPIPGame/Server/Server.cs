@@ -43,7 +43,7 @@ namespace TCPIPGame.Server
         }
 
         #region Events
-        private void Server_OnClientMessage_Translate(int clientID, IClientMessage clientDataMessage)
+        private void Server_OnClientMessage_Translate(int clientID, AClientMessage clientDataMessage)
         {
             TheClientToServerMeossageTranslator.TranslateMessage(clientID, clientDataMessage);
         
