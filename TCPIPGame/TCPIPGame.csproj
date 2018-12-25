@@ -42,40 +42,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\AGameClientStatus.cs" />
-    <Compile Include="Client\AServerToClientMessageListener.cs" />
-    <Compile Include="Client\AServerToClientMessageManager.cs" />
-    <Compile Include="Client\AServerToClientMessageTranslator.cs" />
-    <Compile Include="Client\GameClientStatus.cs" />
-    <Compile Include="Client\ServerToClientMessageTranslator.cs" />
-    <Compile Include="Client\GameClient.cs" />
-    <Compile Include="Client\ServerToClientMessageManager.cs" />
-    <Compile Include="Client\ServerToClientMessageListener.cs" />
+    <Compile Include="Client\Networking\AGameClientStatus.cs" />
+    <Compile Include="Client\Communicators\AServerToClientMessageListener.cs" />
+    <Compile Include="Client\Communicators\AServerToClientMessageManager.cs" />
+    <Compile Include="Client\Communicators\AServerToClientMessageTranslator.cs" />
+    <Compile Include="Client\Networking\GameClientStatus.cs" />
+    <Compile Include="Client\Communicators\ServerToClientMessageTranslator.cs" />
+    <Compile Include="Client\Networking\GameClient.cs" />
+    <Compile Include="Client\Communicators\ServerToClientMessageManager.cs" />
+    <Compile Include="Client\Communicators\ServerToClientMessageListener.cs" />
     <Compile Include="Messages\AServerMessage.cs" />
     <Compile Include="Messages\AClientMessage.cs" />
-    <Compile Include="Messages\MessageConnectedToServer.cs" />
     <Compile Include="Messages\Requests\MessageCreateRoomRequest.cs" />
     <Compile Include="Messages\Requests\MessagePreConnectToServerRequest.cs" />
     <Compile Include="Messages\Responses\MessageCreateRoomResponse.cs" />
     <Compile Include="Messages\Responses\MessagePreConnectToServerResponse.cs" />
     <Compile Include="Messages\Responses\MessageConnectToServerResponse.cs" />
     <Compile Include="Messages\Requests\MessageConnectToServerRequest.cs" />
-    <Compile Include="Messages\MessageCreateGameRoom.cs" />
-    <Compile Include="Server\ClientToServerListener.cs" />
-    <Compile Include="Server\ClientToServerMessageManager.cs" />
-    <Compile Include="Server\ClientToServerMessageTranslator.cs" />
-    <Compile Include="Server\GameClientManager.cs" />
-    <Compile Include="Server\GameClient.cs" />
-    <Compile Include="Server\GameRoom.cs" />
-    <Compile Include="Server\GameRoomManager.cs" />
-    <Compile Include="Server\IManager.cs" />
-    <Compile Include="Server\AClientToServerMessageTranslator.cs" />
-    <Compile Include="Server\ServerMessage.cs" />
+    <Compile Include="Server\Communicators\AClientToServerListener.cs" />
+    <Compile Include="Server\Communicators\AClientToServerMessenger.cs" />
+    <Compile Include="Server\Communicators\ClientToServerListener.cs" />
+    <Compile Include="Server\Communicators\ClientToServerMessageManager.cs" />
+    <Compile Include="Server\Communicators\ClientToServerMessageTranslator.cs" />
+    <Compile Include="Server\DomainObjects\GameClientManager.cs" />
+    <Compile Include="Server\Networking\GameClient.cs" />
+    <Compile Include="Server\DomainObjects\GameRoom.cs" />
+    <Compile Include="Server\DomainObjects\GameRoomManager.cs" />
+    <Compile Include="Server\DomainObjects\IManager.cs" />
+    <Compile Include="Server\Communicators\AClientToServerMessageTranslator.cs" />
     <Compile Include="Messages\MessageIDs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serializer.cs" />
-    <Compile Include="Server\Server.cs" />
+    <Compile Include="Utility\Serializer.cs" />
+    <Compile Include="Server\Networking\Server.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\mheloky\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll

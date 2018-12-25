@@ -14,9 +14,9 @@ namespace TCPIPGame.Server
         #region Properties
         public GameClientManager TheGameClientManager=new GameClientManager();
         public GameRoomManager TheGameRoomManager = new GameRoomManager();
-        ClientToServerMessenger TheClientToServerMessenger = new ClientToServerMessenger();
-        ClientToServerListener TheClientToServerListener = new ClientToServerListener();
-        ClientToServerMeossageTranslator TheClientToServerMeossageTranslator = new ClientToServerMeossageTranslator();
+        AClientToServerMessenger TheClientToServerMessenger = new ClientToServerMessenger();
+        AClientToServerListener TheClientToServerListener = new ClientToServerListener();
+        AClientToServerMessageTranslator TheClientToServerMeossageTranslator = new ClientToServerMessageTranslator();
         #endregion
 
         public void Initialize()
@@ -37,15 +37,15 @@ namespace TCPIPGame.Server
             }
         }
 
-        private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest(int clientID, MessageConnectToServerRequest message)
+        private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest(object clientID, MessageConnectToServerRequest message)
         {
-            TheClientToServerMessenger.OnClientMessage_MessageConnectToServerRequest(clientID, message, TheGameRoomManager, TheGameClientManager);
+            TheClientToServerMessenger.OnClientMessage_MessageConnectToServerRequest((int)clientID, message, TheGameRoomManager, TheGameClientManager);
         }
 
         #region Events
-        private void Server_OnClientMessage_Translate(int clientID, AClientMessage clientDataMessage)
+        private void Server_OnClientMessage_Translate(object clientID, AClientMessage clientDataMessage)
         {
-            TheClientToServerMeossageTranslator.TranslateMessage(clientID, clientDataMessage);
+            TheClientToServerMeossageTranslator.TranslateMessage((int)clientID, clientDataMessage);
         
         }
         #endregion

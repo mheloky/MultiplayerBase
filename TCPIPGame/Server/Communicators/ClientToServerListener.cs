@@ -7,11 +7,9 @@ using TCPIPGame.Messages;
 
 namespace TCPIPGame.Server
 {
-    public class ClientToServerListener
+    public class ClientToServerListener:AClientToServerListener
     {
-        public delegate void DelegateOnClientMessage(int clientID, AClientMessage message);
-        public event DelegateOnClientMessage OnClientMessage;
-
+        public event EventHandler<AClientMessage> OnClientMessage;
         public void ListenToClient(GameClient client)
         {
             Thread listeningThread = new Thread(new ThreadStart(() =>

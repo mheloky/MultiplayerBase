@@ -62,7 +62,7 @@ namespace TCPIPGame.Client
             SetupEvents();
         }
 
-        public void SetMessage(AClientMessage message)
+        public void SendMessageToServer(AClientMessage message)
         {
             TheServerToClientMessageManager.SendMessageToServer(message);
         }

@@ -20,7 +20,7 @@ namespace TCPIPGame.Messages
             Name = name;
         }
 
-        public void Translate(int clientID, AClientToServerMessageTranslator translator)
+        public override void Translate(int clientID, AClientToServerMessageTranslator translator)
         {
             translator.TranslateMessage(clientID, this);
         }
