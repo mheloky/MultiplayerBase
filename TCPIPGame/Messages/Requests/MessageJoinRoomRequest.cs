@@ -7,19 +7,19 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessageConnectToServerRequest:AClientMessage
+    public class MessageJoinRoomRequest : AClientMessage
     {
-        public string Name
+        public string RoomName
         {
             get;
             set;
         }
 
-        public MessageConnectToServerRequest(string name)
+        public MessageJoinRoomRequest(string roomName)
         {
-            Name = name;
+            RoomName = roomName;
         }
-  
+
         public override void Translate(int clientID, AClientToServerMessageTranslator translator)
         {
             translator.TranslateMessage(clientID, this);

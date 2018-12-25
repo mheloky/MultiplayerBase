@@ -37,20 +37,17 @@ namespace TCPIPGame.Client
         }
         #endregion
         #region Events
-        public delegate void _preConnectedToServerSucessfully(bool preConnectedSucessfully);
         /// <summary>
         /// Initial call to the server to see if the server will take requests
         /// </summary>
-        public event _preConnectedToServerSucessfully OnPreConnectedToServerResponseReceived;
+        public event EventHandler<AGameClientStatus> OnPreConnectedToServerResponseReceived;
 
-        public delegate void _connectedToServerSucessfully(int clientID, bool preConnectedSucessfully);
         /// <summary>
         /// The server has taken your request to join it
         /// </summary>
-        public event _connectedToServerSucessfully OnConnectedToServerResponseReceived;
+        public event EventHandler<AGameClientStatus> OnConnectedToServerResponseReceived;
 
-        public delegate void CreateGameRoomSuccessful(int clientID, bool CreateGameStatus);
-        public event CreateGameRoomSuccessful OnCreateGameRoomSuccessful;
+        public event EventHandler<MessageCreateRoomResponse> OnCreateGameRoomSuccessful;
         #endregion
 
         public GameClient()
@@ -82,7 +79,7 @@ namespace TCPIPGame.Client
 
             if (OnConnectedToServerResponseReceived != null)
             {
-                OnConnectedToServerResponseReceived(message.ClientID, true);
+                OnConnectedToServerResponseReceived(message.ClientID, TheGameClientStatus);
             }
         }
 
@@ -92,7 +89,7 @@ namespace TCPIPGame.Client
             TheGameClientStatus.SetIsPreConnected(preConnectedSucesfully);
             if (OnPreConnectedToServerResponseReceived != null)
             {
-                OnPreConnectedToServerResponseReceived(preConnectedSucesfully);
+                OnPreConnectedToServerResponseReceived(null, TheGameClientStatus);
             }
         }
 
@@ -100,7 +97,7 @@ namespace TCPIPGame.Client
         {
             if (OnCreateGameRoomSuccessful != null)
             {
-                OnCreateGameRoomSuccessful(clientID, CreateGameStatus);
+                //OnCreateGameRoomSuccessful(null, TheGameClientStatus);
             }
         }
         #endregion

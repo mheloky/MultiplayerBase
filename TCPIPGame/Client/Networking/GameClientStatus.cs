@@ -8,6 +8,7 @@ namespace TCPIPGame.Client
     public class GameClientStatus : AGameClientStatus
     {
         private int _clientID;
+        private string _username;
         private bool _isConnected;
         private bool _isPreConnected;
 
@@ -39,6 +40,16 @@ namespace TCPIPGame.Client
         internal override void SetIsConnected(bool isConnected)
         {
             _isConnected = isConnected;
+        }
+
+        public override string GetUsername()
+        {
+            return _username;
+        }
+
+        internal override void SetUsername(string username)
+        {
+            _username = username;
         }
     }
 }

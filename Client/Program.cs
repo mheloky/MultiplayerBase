@@ -13,8 +13,8 @@ namespace Client
         {
 
             GameClient client = new GameClient();
-            client.OnPreConnectedToServerResponseReceived += Client_PreConnectedToServerSucessfully;
-            client.OnConnectedToServerResponseReceived += Client_ConnectedToServerSucessfully;
+            //client.OnPreConnectedToServerResponseReceived += Client_PreConnectedToServerSucessfully;
+            //client.OnConnectedToServerResponseReceived += Client_ConnectedToServerSucessfully;
 
             client.SendMessageToServer(new MessageConnectToServerRequest("Robot1"));
             //client.OnCreateGameRoomSuccessful += Client_OnCreateGameRoomSuccessful;

@@ -12,6 +12,7 @@ namespace TCPIPGame.Server
         public void OnClientMessage_MessageConnectToServerRequest(int clientID, MessageConnectToServerRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
         {
             var gameClient = gameClientManager.GetGameClientFromID(clientID);
+            gameClient.Name = message.Name;
             var messageResponseWithClientID = new MessageConnectToServerResponse(clientID);
             SendDataToClient(gameClient, messageResponseWithClientID);
         }

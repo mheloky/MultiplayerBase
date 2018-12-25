@@ -16,6 +16,12 @@ namespace TCPIPGame.Server
             set;
         }
 
+        public string Name
+        {
+            get;
+            set;
+        }
+
         public TcpClient TheTcpClient
         {
             get;
