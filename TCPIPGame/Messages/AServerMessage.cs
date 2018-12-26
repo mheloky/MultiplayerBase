@@ -7,6 +7,7 @@ using TCPIPGame.Server;
 
 namespace TCPIPGame.Messages
 {
+    [Serializable]
     public abstract class AServerMessage:EventArgs
     {
         public abstract void Translate(AServerToClientMessageTranslator translator);

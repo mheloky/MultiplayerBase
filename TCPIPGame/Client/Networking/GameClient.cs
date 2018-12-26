@@ -54,6 +54,7 @@ namespace TCPIPGame.Client
         {
             TheGameClientStatus = new GameClientStatus();
             TheTcpClient = new TcpClient(_serverIP, _portNumber);
+            TheServerToClientMessageTranslator = new ServerToClientMessageTranslator();
             TheServerToClientMessageManager = new ServerToClientMessageManager(TheTcpClient, TheServerToClientMessageTranslator);
 
             SetupEvents();
