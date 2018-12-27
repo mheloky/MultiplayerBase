@@ -13,7 +13,7 @@ namespace TCPIPGame.Server
         {
             var gameClient = gameClientManager.GetGameClientFromID(clientID);
             gameClient.Name = message.Name;
-            var messageResponseWithClientID = new MessageConnectToServerResponse(clientID);
+            var messageResponseWithClientID = new MessageConnectToServerResponse(clientID,message.Name);
             SendDataToClient(gameClient, messageResponseWithClientID);
         }
 

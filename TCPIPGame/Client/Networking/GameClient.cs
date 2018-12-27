@@ -40,12 +40,12 @@ namespace TCPIPGame.Client
         /// <summary>
         /// Initial call to the server to see if the server will take requests
         /// </summary>
-        public event EventHandler<AGameClientStatus> OnPreConnectedToServerResponseReceived;
+        public event EventHandler<MessagePreConnectToServerResponse> OnPreConnectedToServerResponseReceived;
 
         /// <summary>
         /// The server has taken your request to join it
         /// </summary>
-        public event EventHandler<AGameClientStatus> OnConnectedToServerResponseReceived;
+        public event EventHandler<MessageConnectToServerResponse> OnConnectedToServerResponseReceived;
 
         public event EventHandler<MessageCreateRoomResponse> OnCreateGameRoomSuccessful;
         #endregion
@@ -76,21 +76,22 @@ namespace TCPIPGame.Client
         #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
         private void Trigger_OnConnectedToServerResponseReceived(object sender, MessageConnectToServerResponse message)
         {
-            TheGameClientStatus.SetClientID(message.ClientID);
-
+            //TheGameClientStatus.SetClientID(message.ClientID);
+            //TheGameClientStatus.SetUsername(message.)
             if (OnConnectedToServerResponseReceived != null)
             {
-                OnConnectedToServerResponseReceived(message.ClientID, TheGameClientStatus);
+                OnConnectedToServerResponseReceived(message.ClientID, message);
             }
         }
 
         private void Trigger_OnPreConnectedToServerResponseReceived(object sender, MessagePreConnectToServerResponse message)
         {
-            var preConnectedSucesfully = message.Connected;
-            TheGameClientStatus.SetIsPreConnected(preConnectedSucesfully);
+            //var preConnectedSucesfully = message.Connected;
+            //TheGameClientStatus.SetIsPreConnected(preConnectedSucesfully);
             if (OnPreConnectedToServerResponseReceived != null)
             {
-                OnPreConnectedToServerResponseReceived(null, TheGameClientStatus);
+                Console.WriteLine("1");
+                OnPreConnectedToServerResponseReceived(null, message);
             }
         }
 

@@ -17,6 +17,7 @@ namespace TCPIPGame.Client
         {
             if(Event_OnPreConnectToServerResponseTranslated != null)
             {
+                Console.WriteLine("11");
                 Event_OnPreConnectToServerResponseTranslated(null,message);
             }
         }

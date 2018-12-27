@@ -16,7 +16,7 @@ namespace Client
             //client.OnPreConnectedToServerResponseReceived += Client_PreConnectedToServerSucessfully;
             //client.OnConnectedToServerResponseReceived += Client_ConnectedToServerSucessfully;
 
-            client.SendMessageToServer(new MessageConnectToServerRequest("Robot1"));
+           // client.SendMessageToServer(new MessageConnectToServerRequest("Robot1"));
             //client.OnCreateGameRoomSuccessful += Client_OnCreateGameRoomSuccessful;
             /* //---data to send to the server---
             string textToSend = DateTime.Now.ToString();
