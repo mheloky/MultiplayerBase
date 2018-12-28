@@ -10,5 +10,6 @@ namespace TCPIPGame.Server
     {
         void SendDataToClient(GameClient theGameClient, AServerMessage data);
         void OnClientMessage_MessageConnectToServerRequest(int clientID, MessageConnectToServerRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
+        void OnClientMessage_MessageCreateRoomRequest(int clientID, MessageCreateRoomRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
     }
 }

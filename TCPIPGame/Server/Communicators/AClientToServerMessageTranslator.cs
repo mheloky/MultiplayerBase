@@ -11,5 +11,6 @@ namespace TCPIPGame.Server
         void TranslateMessage(int clientID, AClientMessage message);
         void TranslateMessage(int clientID, MessageConnectToServerRequest message);
         event EventHandler<MessageConnectToServerRequest> TranslatedMessageToMessageConnectToServerRequest;
+        event EventHandler<MessageCreateRoomRequest> TranslatedMessageToMessageCreateRoomRequest;
     }
 }

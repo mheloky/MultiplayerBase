@@ -17,6 +17,13 @@ namespace TCPIPGame.Server
             SendDataToClient(gameClient, messageResponseWithClientID);
         }
 
+        public void OnClientMessage_MessageCreateRoomRequest(int clientID, MessageCreateRoomRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
+        {
+            var gameClient = gameClientManager.GetGameClientFromID(clientID);
+            var messageResponse = new MessageCreateRoomResponse(message.RoomName);
+            SendDataToClient(gameClient, messageResponse);
+        }
+
         public void SendDataToClient(GameClient theGameClient, AServerMessage data)
         {
             Serializer serializer = new Serializer();

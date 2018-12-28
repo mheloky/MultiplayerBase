@@ -24,6 +24,7 @@ namespace TCPIPGame.Server
             TcpListener server = new TcpListener(IPAddress.Any, 80);
             TheClientToServerListener.OnClientMessage += Server_OnClientMessage_Translate;
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageConnectToServerRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest;
+            TheClientToServerMeossageTranslator.TranslatedMessageToMessageCreateRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest;
             // we set our IP address as server's address, and we also set the port: 9999
 
             server.Start();  // this will start the server
@@ -35,6 +36,11 @@ namespace TCPIPGame.Server
                 TheClientToServerMessenger.SendDataToClient(gameClient, theMessage);
                 TheClientToServerListener.ListenToClient(gameClient);
             }
+        }
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest(object sender, MessageCreateRoomRequest e)
+        {
+        
         }
 
         private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest(object clientID, MessageConnectToServerRequest message)

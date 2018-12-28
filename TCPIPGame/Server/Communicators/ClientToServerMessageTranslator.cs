@@ -9,12 +9,21 @@ namespace TCPIPGame.Server
     public class ClientToServerMessageTranslator:AClientToServerMessageTranslator
     {
         public event EventHandler<MessageConnectToServerRequest> TranslatedMessageToMessageConnectToServerRequest;
+        public event EventHandler<MessageCreateRoomRequest> TranslatedMessageToMessageCreateRoomRequest;
 
         public void TranslateMessage(int clientID, MessageConnectToServerRequest message)
         {
             if(TranslatedMessageToMessageConnectToServerRequest!=null)
             {
                 TranslatedMessageToMessageConnectToServerRequest(clientID, message);
+            }
+        }
+
+        public void TranslateMessage(int clientID, MessageCreateRoomRequest message)
+        {
+            if (TranslatedMessageToMessageCreateRoomRequest != null)
+            {
+                TranslatedMessageToMessageCreateRoomRequest(clientID, message);
             }
         }
 
