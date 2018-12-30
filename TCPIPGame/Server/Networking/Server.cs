@@ -14,7 +14,7 @@ namespace TCPIPGame.Server
         #region Properties
         public GameClientManager TheGameClientManager=new GameClientManager();
         public GameRoomManager TheGameRoomManager = new GameRoomManager();
-        AClientToServerMessenger TheClientToServerMessenger = new ClientToServerMessenger();
+        AClientToServerMessageManager TheClientToServerMessenger = new ClientToServerMessageManager ();
         AClientToServerListener TheClientToServerListener = new ClientToServerListener();
         AClientToServerMessageTranslator TheClientToServerMeossageTranslator = new ClientToServerMessageTranslator();
         #endregion
@@ -25,6 +25,7 @@ namespace TCPIPGame.Server
             TheClientToServerListener.OnClientMessage += Server_OnClientMessage_Translate;
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageConnectToServerRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageCreateRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest;
+            TheClientToServerMeossageTranslator.TranslatedMessageGetGameRoomHostRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomHostRequest;
             // we set our IP address as server's address, and we also set the port: 9999
 
             server.Start();  // this will start the server
@@ -46,6 +47,11 @@ namespace TCPIPGame.Server
         private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest(object clientID, MessageConnectToServerRequest message)
         {
             TheClientToServerMessenger.OnClientMessage_MessageConnectToServerRequest((int)clientID, message, TheGameRoomManager, TheGameClientManager);
+        }
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomHostRequest(object clientID, MessageGetGameRoomHostRequest e)
+        {
+           TheClientToServerMessenger.OnClientMessage_MessageGetGameRoomHostRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
         }
 
         #region Events

@@ -31,9 +31,9 @@ namespace TCPIPGame.Server
             return theGameClient;
         }
 
-        public GameClient GetGameClientFromID(int id)
+        public GameClient GetGameClientFromClientID(int clientID)
         {
-            return ClientIDMapping[id];
+            return ClientIDMapping[clientID];
         }
     }
 }

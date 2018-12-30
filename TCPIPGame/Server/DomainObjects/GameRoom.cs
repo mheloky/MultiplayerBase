@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TCPIPGame.Server.DomainObjects;
 
 namespace TCPIPGame.Server
 {
@@ -25,16 +26,23 @@ namespace TCPIPGame.Server
             set;
         }
 
+        int TheGameRoomsHostClientID
+        {
+            get;
+            set;
+        }
+
         Dictionary<int, List<int>> TeamToGameClientsMapping
         {
             get;
             set;
         }
 
-        public GameRoom(int teamCount, string gameRoomName)
+        public GameRoom(int teamCount, string gameRoomName, int theGameRoomsHostClientID)
         {
             TeamCount = teamCount;
             Name = gameRoomName;
+            TheGameRoomsHostClientID = theGameRoomsHostClientID;
             TeamToGameClientsMapping = new Dictionary<int, List<int>>();
 
             for (int i = 0; i < TeamCount; i++)
@@ -62,6 +70,11 @@ namespace TCPIPGame.Server
             }
 
             return gameClients.ToArray();
+        }
+
+        public int GetGameRoomHostClientID()
+        {
+            return TheGameRoomsHostClientID;
         }
 
     }

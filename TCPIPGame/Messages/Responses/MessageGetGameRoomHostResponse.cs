@@ -9,31 +9,17 @@ using TCPIPGame.Server.DomainObjects;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessageCreateRoomResponse : AServerMessage
+    public class MessageGetGameRoomHostResponse : AServerMessage
     {
-        public string RoomName
-        {
-            get;
-            private set;
-        }
-
-        public int RoomID
-        {
-            get;
-            private set;
-        }
-
         public Player TheGameRoomHost
         {
             get;
             private set;
         }
 
-        public MessageCreateRoomResponse(string roomName, int roomID, Player gameRoomHost)
+        public MessageGetGameRoomHostResponse(Player gameRoomHost)
         {
-            RoomName = roomName;
-            RoomID = roomID;
-            TheGameRoomHost = gameRoomHost;
+             TheGameRoomHost = gameRoomHost;
         }
 
         public override void Translate(AServerToClientMessageTranslator translator)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using TCPIPGame;
+using TCPIPGame.Server.DomainObjects;
 
 namespace TCPIPGame.Server
 {
@@ -27,10 +28,10 @@ namespace TCPIPGame.Server
             GameClientToGameRoomMap = new Dictionary<int, int>();
         }
 
-        public int CreateRoom(int teamCount, string gameRoomName)
+        public int CreateRoom(int teamCount, string gameRoomName, int theGameRoomsHostClientID)
         {
             IDSeed++;
-            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount, gameRoomName));
+            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount, gameRoomName, theGameRoomsHostClientID));
             return IDSeed;
         }
 
@@ -48,6 +49,11 @@ namespace TCPIPGame.Server
         public int GetClientRoomID(int clientID)
         {
             return GameClientToGameRoomMap[clientID];
+        }
+
+        public int GetGameRoomHostClientIDFromGameRoomID(int gameRoomID)
+        {
+            return GameRooms[gameRoomID].GetGameRoomHostClientID();
         }
 
         public int GenerateManageeID()

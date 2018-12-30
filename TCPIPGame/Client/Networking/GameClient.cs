@@ -48,6 +48,8 @@ namespace TCPIPGame.Client
         public event EventHandler<MessageConnectToServerResponse> OnConnectedToServerResponseReceived;
 
         public event EventHandler<MessageCreateRoomResponse> OnCreateGameRoomSuccessful;
+
+        public event EventHandler<MessageGetGameRoomHostResponse> OnGetGameRoomHostRequestSuccessful;
         #endregion
 
         public GameClient()
@@ -71,24 +73,13 @@ namespace TCPIPGame.Client
             TheServerToClientMessageTranslator.Event_OnPreConnectToServerResponseTranslated += Trigger_OnPreConnectedToServerResponseReceived;
             TheServerToClientMessageTranslator.Event_OnConnectToServerResponseTranslated += Trigger_OnConnectedToServerResponseReceived;
             TheServerToClientMessageTranslator.Event_OnCreateRoomServerResponseTranslated += TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated;
+            TheServerToClientMessageTranslator.Event_OnGetGameRoomHostResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomHostRequestTranslated;
         }
 
-        private void TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated(object sender, MessageCreateRoomResponse e)
-        {
-            if (OnCreateGameRoomSuccessful != null)
-            {
-                OnCreateGameRoomSuccessful(null, e);
-            }
-        }
+      
         #endregion
         #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
-        private void Trigger_OnConnectedToServerResponseReceived(object sender, MessageConnectToServerResponse message)
-        {
-            if (OnConnectedToServerResponseReceived != null)
-            {
-                OnConnectedToServerResponseReceived(message.ClientID, message);
-            }
-        }
+       
 
         private void Trigger_OnPreConnectedToServerResponseReceived(object sender, MessagePreConnectToServerResponse message)
         {
@@ -97,6 +88,32 @@ namespace TCPIPGame.Client
                 OnPreConnectedToServerResponseReceived(null, message);
             }
         }
+
+        private void Trigger_OnConnectedToServerResponseReceived(object sender, MessageConnectToServerResponse message)
+        {
+            if (OnConnectedToServerResponseReceived != null)
+            {
+                OnConnectedToServerResponseReceived(message.ClientID, message);
+            }
+        }
+
+
+        private void TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated(object sender, MessageCreateRoomResponse e)
+        {
+            if (OnCreateGameRoomSuccessful != null)
+            {
+                OnCreateGameRoomSuccessful(null, e);
+            }
+        }
+
+        private void TheServerToClientMessageTranslator_Event_OnGetGameRoomHostRequestTranslated(object sender, MessageGetGameRoomHostResponse e)
+        {
+            if (OnGetGameRoomHostRequestSuccessful != null)
+            {
+                OnGetGameRoomHostRequestSuccessful(null, e);
+            }
+        }
+
         #endregion
     }
 }
