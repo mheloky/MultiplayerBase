@@ -38,9 +38,9 @@ namespace TCPIPGame.Server
             }
         }
 
-        private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest(object sender, MessageCreateRoomRequest e)
+        private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest(object clientID, MessageCreateRoomRequest e)
         {
-        
+            TheClientToServerMessenger.OnClientMessage_MessageCreateRoomRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
         }
 
         private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest(object clientID, MessageConnectToServerRequest message)

@@ -70,14 +70,20 @@ namespace TCPIPGame.Client
         {
             TheServerToClientMessageTranslator.Event_OnPreConnectToServerResponseTranslated += Trigger_OnPreConnectedToServerResponseReceived;
             TheServerToClientMessageTranslator.Event_OnConnectToServerResponseTranslated += Trigger_OnConnectedToServerResponseReceived;
-            //TheServerToClientMessageManager.OnCreateGameRoomSuccessful += TheServerToClientMessageManager_OnCreateGameRoomSuccessful;
+            TheServerToClientMessageTranslator.Event_OnCreateRoomServerResponseTranslated += TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated;
+        }
+
+        private void TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated(object sender, MessageCreateRoomResponse e)
+        {
+            if (OnCreateGameRoomSuccessful != null)
+            {
+                OnCreateGameRoomSuccessful(null, e);
+            }
         }
         #endregion
         #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
         private void Trigger_OnConnectedToServerResponseReceived(object sender, MessageConnectToServerResponse message)
         {
-            //TheGameClientStatus.SetClientID(message.ClientID);
-            //TheGameClientStatus.SetUsername(message.)
             if (OnConnectedToServerResponseReceived != null)
             {
                 OnConnectedToServerResponseReceived(message.ClientID, message);
@@ -86,20 +92,9 @@ namespace TCPIPGame.Client
 
         private void Trigger_OnPreConnectedToServerResponseReceived(object sender, MessagePreConnectToServerResponse message)
         {
-            //var preConnectedSucesfully = message.Connected;
-            //TheGameClientStatus.SetIsPreConnected(preConnectedSucesfully);
             if (OnPreConnectedToServerResponseReceived != null)
             {
-                Console.WriteLine("1");
                 OnPreConnectedToServerResponseReceived(null, message);
-            }
-        }
-
-        private void Trigger_OnCreateGameRoomSuccessful(int clientID, bool CreateGameStatus)
-        {
-            if (OnCreateGameRoomSuccessful != null)
-            {
-                //OnCreateGameRoomSuccessful(null, TheGameClientStatus);
             }
         }
         #endregion

@@ -80,7 +80,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\mheloky\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\Vision\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll
 
 
 </PostBuildEvent>

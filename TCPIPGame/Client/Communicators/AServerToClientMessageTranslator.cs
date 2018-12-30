@@ -11,8 +11,10 @@ namespace TCPIPGame.Client
         void TranslateMessage(AServerMessage message);
         void TranslateMessage(MessagePreConnectToServerResponse message);
         void TranslateMessage(MessageConnectToServerResponse message);
+        void TranslateMessage(MessageCreateRoomResponse message);
 
         event EventHandler<MessagePreConnectToServerResponse> Event_OnPreConnectToServerResponseTranslated;
         event EventHandler<MessageConnectToServerResponse> Event_OnConnectToServerResponseTranslated;
+        event EventHandler<MessageCreateRoomResponse> Event_OnCreateRoomServerResponseTranslated;
     }
 }

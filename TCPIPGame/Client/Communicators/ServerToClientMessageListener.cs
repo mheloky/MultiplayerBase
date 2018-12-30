@@ -17,10 +17,13 @@ namespace TCPIPGame.Client
 
         public void ListenAsync(TcpClient TheTcpClient)
         {
-            new Thread(() =>
-            {
-                Listen(TheTcpClient);
-            }).Start();
+            var theThread = new Thread(() =>
+              {
+                  Listen(TheTcpClient);
+              });
+
+            theThread.IsBackground = true;
+            theThread.Start();
         }
 
         private void Listen(TcpClient TheTcpClient)
