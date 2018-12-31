@@ -71,7 +71,13 @@ namespace TCPIPGame.Server
             var playerThatJoined=new PlayerManager().GetPlayerFromClientID(clientID, gameClientManager);
             var theGameClients = gameClientManager.GetGameClientsFromClientIDs(clientIDs.ToList());
 
-            SendDataToClientsInRoom(theGameClients, new MessageJoinGameRoomResponse(playerThatJoined));
+            SendDataToClients(theGameClients, new MessageJoinGameRoomResponse(playerThatJoined));
+        }
+
+        public void OnClientMessage_MessageSendGameRoomTextMessageRequest(int clientID, MessageSendGameRoomTextMessageRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
+        {
+            var roomID = gameRoomManager.GetClientRoomID(clientID);
+            SendDataToClientsInRoom(roomID, gameRoomManager, gameClientManager, new MessageSendGameRoomTextMessageResponse(message.TheMessage));
         }
 
         public void SendDataToClient(GameClient theGameClient, AServerMessage data)
@@ -81,7 +87,7 @@ namespace TCPIPGame.Server
             theGameClient.TheNetworkStream.Write(theData, 0, theData.Length);     //sending the message
         }
 
-        public void SendDataToClientsInRoom(List<GameClient> theGameClient, AServerMessage data)
+        public void SendDataToClients(List<GameClient> theGameClient, AServerMessage data)
         {
             Serializer serializer = new Serializer();
             var theData = serializer.ObjectToByteArray(data);
@@ -91,6 +97,14 @@ namespace TCPIPGame.Server
                 var client = theGameClient[i];
                 client.TheNetworkStream.Write(theData, 0, theData.Length);     //sending the message
             }
+        }
+
+        public void SendDataToClientsInRoom(int roomID, GameRoomManager gameRoomManager, GameClientManager gameClientManager, AServerMessage data)
+        {
+            var clientIDs = gameRoomManager.GetGameClientsInRoom(roomID);
+            var theGameClients = gameClientManager.GetGameClientsFromClientIDs(clientIDs.ToList());
+
+            SendDataToClients(theGameClients, data);
         }
     }
 }

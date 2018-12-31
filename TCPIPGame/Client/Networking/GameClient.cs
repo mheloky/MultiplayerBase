@@ -47,6 +47,7 @@ namespace TCPIPGame.Client
         public event EventHandler<MessageConnectToServerResponse> OnConnectedToServerResponseReceived;
         public event EventHandler<MessageCreateRoomResponse> OnCreateGameRoomSuccessful;
         public event EventHandler<MessageGetGameRoomHostResponse> OnGetGameRoomHostRequestSuccessful;
+        public event EventHandler<MessageGetGameRoomHostResponse> OnGetGameRoomPlayersRequestSuccessful;
         public event EventHandler<MessageJoinGameRoomResponse> OnJoinGameRoomRequestSuccessful;
         #endregion
 
@@ -72,7 +73,10 @@ namespace TCPIPGame.Client
             TheServerToClientMessageTranslator.Event_OnConnectToServerResponseTranslated += Trigger_OnConnectedToServerResponseReceived;
             TheServerToClientMessageTranslator.Event_OnCreateRoomServerResponseTranslated += TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated;
             TheServerToClientMessageTranslator.Event_OnGetGameRoomHostResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomHostRequestTranslated;
+            TheServerToClientMessageTranslator.Event_OnGetGameRoomPlayersResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomPlayersResponseTranslated;
             TheServerToClientMessageTranslator.Event_OnJoinGameRoomResponseTranslated += TheServerToClientMessageTranslator_Event_OnJoinGameRoomResponseTranslated;
+
+
         }
 
         #endregion
@@ -112,6 +116,14 @@ namespace TCPIPGame.Client
             }
         }
 
+        private void TheServerToClientMessageTranslator_Event_OnGetGameRoomPlayersResponseTranslated(object sender, MessageGetGameRoomPlayersResponse e)
+        {
+            if (OnGetGameRoomPlayersRequestSuccessful != null)
+            {
+                OnGetGameRoomPlayersRequestSuccessful(null, e);
+            }
+        }
+
         private void TheServerToClientMessageTranslator_Event_OnJoinGameRoomResponseTranslated(object sender, MessageJoinGameRoomResponse e)
         {
             if (OnJoinGameRoomRequestSuccessful != null)
@@ -119,7 +131,6 @@ namespace TCPIPGame.Client
                 OnJoinGameRoomRequestSuccessful(null, e);
             }
         }
-
         #endregion
     }
 }
