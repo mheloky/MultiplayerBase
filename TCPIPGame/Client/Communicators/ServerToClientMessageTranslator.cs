@@ -13,6 +13,8 @@ namespace TCPIPGame.Client
         public event EventHandler<MessageConnectToServerResponse> Event_OnConnectToServerResponseTranslated;
         public event EventHandler<MessageCreateRoomResponse> Event_OnCreateRoomServerResponseTranslated;
         public event EventHandler<MessageGetGameRoomHostResponse> Event_OnGetGameRoomHostResponseTranslated;
+        public event EventHandler<MessageGetGameRoomPlayersResponse> Event_OnGetGameRoomPlayersResponseTranslated;
+        public event EventHandler<MessageJoinGameRoomResponse> Event_OnJoinGameRoomResponseTranslated;
         #endregion
 
         public void TranslateMessage(MessagePreConnectToServerResponse message)
@@ -44,6 +46,22 @@ namespace TCPIPGame.Client
             if (Event_OnGetGameRoomHostResponseTranslated != null)
             {
                 Event_OnGetGameRoomHostResponseTranslated(null, message);
+            }
+        }
+
+        public void TranslateMessage(MessageGetGameRoomPlayersResponse message)
+        {
+            if (Event_OnGetGameRoomPlayersResponseTranslated != null)
+            {
+                Event_OnGetGameRoomPlayersResponseTranslated(null, message);
+            }
+        }
+
+        public void TranslateMessage(MessageJoinGameRoomResponse message)
+        {
+            if (Event_OnJoinGameRoomResponseTranslated != null)
+            {
+                Event_OnJoinGameRoomResponseTranslated(null, message);
             }
         }
 

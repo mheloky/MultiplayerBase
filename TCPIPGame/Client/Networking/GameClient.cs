@@ -41,15 +41,13 @@ namespace TCPIPGame.Client
         /// Initial call to the server to see if the server will take requests
         /// </summary>
         public event EventHandler<MessagePreConnectToServerResponse> OnPreConnectedToServerResponseReceived;
-
         /// <summary>
         /// The server has taken your request to join it
         /// </summary>
         public event EventHandler<MessageConnectToServerResponse> OnConnectedToServerResponseReceived;
-
         public event EventHandler<MessageCreateRoomResponse> OnCreateGameRoomSuccessful;
-
         public event EventHandler<MessageGetGameRoomHostResponse> OnGetGameRoomHostRequestSuccessful;
+        public event EventHandler<MessageJoinGameRoomResponse> OnJoinGameRoomRequestSuccessful;
         #endregion
 
         public GameClient()
@@ -74,12 +72,12 @@ namespace TCPIPGame.Client
             TheServerToClientMessageTranslator.Event_OnConnectToServerResponseTranslated += Trigger_OnConnectedToServerResponseReceived;
             TheServerToClientMessageTranslator.Event_OnCreateRoomServerResponseTranslated += TheServerToClientMessageTranslator_Event_OnCreateRoomServerResponseTranslated;
             TheServerToClientMessageTranslator.Event_OnGetGameRoomHostResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomHostRequestTranslated;
+            TheServerToClientMessageTranslator.Event_OnJoinGameRoomResponseTranslated += TheServerToClientMessageTranslator_Event_OnJoinGameRoomResponseTranslated;
         }
 
-      
         #endregion
         #region Trigger Events (Trigger Events that higher level classes subscribed to this class receive)
-       
+
 
         private void Trigger_OnPreConnectedToServerResponseReceived(object sender, MessagePreConnectToServerResponse message)
         {
@@ -111,6 +109,14 @@ namespace TCPIPGame.Client
             if (OnGetGameRoomHostRequestSuccessful != null)
             {
                 OnGetGameRoomHostRequestSuccessful(null, e);
+            }
+        }
+
+        private void TheServerToClientMessageTranslator_Event_OnJoinGameRoomResponseTranslated(object sender, MessageJoinGameRoomResponse e)
+        {
+            if (OnJoinGameRoomRequestSuccessful != null)
+            {
+                OnJoinGameRoomRequestSuccessful(null, e);
             }
         }
 

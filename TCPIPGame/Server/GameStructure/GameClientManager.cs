@@ -35,5 +35,16 @@ namespace TCPIPGame.Server
         {
             return ClientIDMapping[clientID];
         }
+
+        public List<GameClient> GetGameClientsFromClientIDs(List<int> clientIDs)
+        {
+            var gameClients = new List<GameClient>(); 
+            for(int i=0;i<clientIDs.Count;i++)
+            {
+                var clientID = clientIDs[i];
+                gameClients.Add(GetGameClientFromClientID(clientID));
+            }
+            return gameClients;
+        }
     }
 }

@@ -7,17 +7,17 @@ using TCPIPGame.Server;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class MessageJoinRoomRequest : AClientMessage
+    public class MessageJoinGameRoomRequest : AClientMessage
     {
-        public string RoomName
+        public int RoomID
         {
             get;
             set;
         }
 
-        public MessageJoinRoomRequest(string roomName)
+        public MessageJoinGameRoomRequest(int roomID)
         {
-            RoomName = roomName;
+            RoomID = roomID;
         }
 
         public override void Translate(int clientID, AClientToServerMessageTranslator translator)

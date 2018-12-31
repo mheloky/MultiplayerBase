@@ -6,7 +6,7 @@ using System.Text;
 namespace TCPIPGame.Server.DomainObjects
 {
    [Serializable]
-    public class Player
+    public class Player:APlayer
     {
         private int _clientID;
         private string _userName;

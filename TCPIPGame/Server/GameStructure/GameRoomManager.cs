@@ -41,7 +41,7 @@ namespace TCPIPGame.Server
             GameClientToGameRoomMap.Add(clientID, roomID);
         }
 
-        public int[] GetGameClientsInRoom(int roomID)
+        public List<int> GetGameClientsInRoom(int roomID)
         {
             return GameRooms[roomID].GetGameClientsInRoom();
         }

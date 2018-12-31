@@ -49,6 +49,8 @@ namespace TCPIPGame.Server
             {
                 TeamToGameClientsMapping.Add(i, new List<int>());
             }
+
+            AddGameClientToTeam(0, TheGameRoomsHostClientID);
         }
 
         public void AddGameClientToTeam(int teamNumber, int gameClientID)
@@ -61,7 +63,7 @@ namespace TCPIPGame.Server
             TeamToGameClientsMapping[teamNumber].Remove(clientID);
         }
 
-        public int[] GetGameClientsInRoom()
+        public List<int> GetGameClientsInRoom()
         {
             List<int> gameClients = new List<int>();
             for(int i=0;i< TeamToGameClientsMapping.Count;i++)
@@ -69,7 +71,7 @@ namespace TCPIPGame.Server
                 gameClients.AddRange(TeamToGameClientsMapping[i]);
             }
 
-            return gameClients.ToArray();
+            return gameClients;
         }
 
         public int GetGameRoomHostClientID()
