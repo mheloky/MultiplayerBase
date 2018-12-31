@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TCPIPGame.Messages;
-using TCPIPGame.Server;
 using TCPIPGame.Server.DomainObjects;
 using TCPIPGame.Server.GameStructure;
 
@@ -78,6 +75,23 @@ namespace TCPIPGame.Server
         {
             var roomID = gameRoomManager.GetClientRoomID(clientID);
             SendDataToClientsInRoom(roomID, gameRoomManager, gameClientManager, new MessageSendGameRoomTextMessageResponse(message.TheMessage));
+        }
+
+        public void OnClientMessage_MessageGetGameRoomsRequest(int clientID, MessageGetGameRoomsRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
+        {
+            var gameClient = gameClientManager.GetGameClientFromClientID(clientID);
+            var gameRooms = gameRoomManager.GetGameRooms();
+
+            var lightGameRooms = new List<TCPIPGame.Messages.GameRoom>();
+
+            for(int i=0;i<gameRooms.Count;i++)
+            {
+                var roomID = gameRooms[i].ID;
+                var roomName = gameRooms[i].Name;
+                lightGameRooms.Add(new TCPIPGame.Messages.GameRoom(roomID, roomName));
+            }
+
+            SendDataToClient(gameClient, new MessageGetGameRoomsResponse(lightGameRooms));
         }
 
         public void SendDataToClient(GameClient theGameClient, AServerMessage data)

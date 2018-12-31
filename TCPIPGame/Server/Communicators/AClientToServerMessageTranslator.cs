@@ -15,6 +15,7 @@ namespace TCPIPGame.Server
         void TranslateMessage(int clientID, MessageGetGameRoomPlayersRequest message);
         void TranslateMessage(int clientID, MessageJoinGameRoomRequest message);
         void TranslateMessage(int clientID, MessageSendGameRoomTextMessageRequest message);
+        void TranslateMessage(int clientID, MessageGetGameRoomsRequest message);
 
         event EventHandler<MessageConnectToServerRequest> TranslatedMessageToMessageConnectToServerRequest;
         event EventHandler<MessageCreateRoomRequest> TranslatedMessageToMessageCreateRoomRequest;
@@ -22,5 +23,6 @@ namespace TCPIPGame.Server
         event EventHandler<MessageGetGameRoomPlayersRequest> TranslatedMessageGetGamePlayersRequest;
         event EventHandler<MessageJoinGameRoomRequest> TranslatedMessageJoinGameRoomRequest;
         event EventHandler<MessageSendGameRoomTextMessageRequest> TranslatedMessageSendGameRoomTextMessageRequest;
+        event EventHandler<MessageGetGameRoomsRequest> TranslatedGetGameRoomsRequest;
     }
 }

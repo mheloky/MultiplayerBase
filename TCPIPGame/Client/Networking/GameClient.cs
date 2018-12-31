@@ -47,8 +47,9 @@ namespace TCPIPGame.Client
         public event EventHandler<MessageConnectToServerResponse> OnConnectedToServerResponseReceived;
         public event EventHandler<MessageCreateRoomResponse> OnCreateGameRoomSuccessful;
         public event EventHandler<MessageGetGameRoomHostResponse> OnGetGameRoomHostRequestSuccessful;
-        public event EventHandler<MessageGetGameRoomHostResponse> OnGetGameRoomPlayersRequestSuccessful;
+        public event EventHandler<MessageGetGameRoomPlayersResponse> OnGetGameRoomPlayersRequestSuccessful;
         public event EventHandler<MessageJoinGameRoomResponse> OnJoinGameRoomRequestSuccessful;
+        public event EventHandler<MessageGetGameRoomsResponse> OnGetGameRoomsRequestSuccessful;
         #endregion
 
         public GameClient()
@@ -75,8 +76,7 @@ namespace TCPIPGame.Client
             TheServerToClientMessageTranslator.Event_OnGetGameRoomHostResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomHostRequestTranslated;
             TheServerToClientMessageTranslator.Event_OnGetGameRoomPlayersResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomPlayersResponseTranslated;
             TheServerToClientMessageTranslator.Event_OnJoinGameRoomResponseTranslated += TheServerToClientMessageTranslator_Event_OnJoinGameRoomResponseTranslated;
-
-
+            TheServerToClientMessageTranslator.Event_OnGetGameRoomsResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomsResponseTranslated;
         }
 
         #endregion
@@ -129,6 +129,14 @@ namespace TCPIPGame.Client
             if (OnJoinGameRoomRequestSuccessful != null)
             {
                 OnJoinGameRoomRequestSuccessful(null, e);
+            }
+        }
+
+        private void TheServerToClientMessageTranslator_Event_OnGetGameRoomsResponseTranslated(object sender, MessageGetGameRoomsResponse e)
+        {
+            if (OnGetGameRoomsRequestSuccessful != null)
+            {
+                OnGetGameRoomsRequestSuccessful(null, e);
             }
         }
         #endregion

@@ -56,6 +56,11 @@ namespace TCPIPGame.Server
             return GameRooms[gameRoomID].GetGameRoomHostClientID();
         }
 
+        public List<GameRoom> GetGameRooms()
+        {
+            return GameRooms.Select(x => x.Value).ToArray().ToList();
+        }
+
         public int GenerateManageeID()
         {
             IDSeed++;
