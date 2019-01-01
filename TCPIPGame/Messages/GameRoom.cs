@@ -5,6 +5,7 @@ using System.Text;
 
 namespace TCPIPGame.Messages
 {
+    [Serializable]
     public class GameRoom
     {
         int _roomID;

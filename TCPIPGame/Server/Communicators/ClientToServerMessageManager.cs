@@ -21,6 +21,7 @@ namespace TCPIPGame.Server
             var gameClient = gameClientManager.GetGameClientFromClientID(clientID);
             var gameRoomHost = new Player(gameClient.ID, gameClient.Name);
             var  roomID=gameRoomManager.CreateRoom(2, message.RoomName, clientID);
+            gameRoomManager.AddPlayerToGameRoom(clientID, roomID, 0,true);
             var messageResponse = new MessageCreateRoomResponse(message.RoomName, roomID, gameRoomHost);
             SendDataToClient(gameClient, messageResponse);
         }
@@ -36,7 +37,7 @@ namespace TCPIPGame.Server
             SendDataToClient(gameClient, messageResponse);
         }
 
-        public void OnClientMessage_MessageGetGameRoomPlayersRequest(int clientID, MessageGetGameRoomHostRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
+        public void OnClientMessage_MessageGetGameRoomPlayersRequest(int clientID, MessageGetGameRoomPlayersRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
         {
             var roomID = message.RoomID;
             var roomHostClientID = gameRoomManager.GetGameRoomHostClientIDFromGameRoomID(message.RoomID);

@@ -26,6 +26,10 @@ namespace TCPIPGame.Server
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageConnectToServerRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageCreateRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageGetGameRoomHostRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomHostRequest;
+            TheClientToServerMeossageTranslator.TranslatedMessageGetGamePlayersRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGamePlayersRequest;
+            TheClientToServerMeossageTranslator.TranslatedMessageGetGameRoomsRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomsRequest;
+            TheClientToServerMeossageTranslator.TranslatedMessageJoinGameRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageJoinGameRoomRequest; ;
+            TheClientToServerMeossageTranslator.TranslatedMessageSendGameRoomTextMessageRequest += TheClientToServerMeossageTranslator_TranslatedMessageSendGameRoomTextMessageRequest;
             // we set our IP address as server's address, and we also set the port: 9999
 
             server.Start();  // this will start the server
@@ -52,6 +56,27 @@ namespace TCPIPGame.Server
         private void TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomHostRequest(object clientID, MessageGetGameRoomHostRequest e)
         {
            TheClientToServerMessenger.OnClientMessage_MessageGetGameRoomHostRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
+        }
+
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomsRequest(object clientID, MessageGetGameRoomsRequest e)
+        {
+            TheClientToServerMessenger.OnClientMessage_MessageGetGameRoomsRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
+        }
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageGetGamePlayersRequest(object clientID, MessageGetGameRoomPlayersRequest e)
+        {
+            TheClientToServerMessenger.OnClientMessage_MessageGetGameRoomPlayersRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
+        }
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageSendGameRoomTextMessageRequest(object clientID, MessageSendGameRoomTextMessageRequest e)
+        {
+            TheClientToServerMessenger.OnClientMessage_MessageSendGameRoomTextMessageRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
+        }
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageJoinGameRoomRequest(object clientID, MessageJoinGameRoomRequest e)
+        {
+            TheClientToServerMessenger.OnClientMessage_MessageJoinGameRoomRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
         }
 
         #region Events

@@ -38,24 +38,26 @@ namespace TCPIPGame.Server
             set;
         }
 
-        public GameRoom(int teamCount, string gameRoomName, int theGameRoomsHostClientID)
+        public GameRoom(int teamCount, string gameRoomName)
         {
             TeamCount = teamCount;
             Name = gameRoomName;
-            TheGameRoomsHostClientID = theGameRoomsHostClientID;
             TeamToGameClientsMapping = new Dictionary<int, List<int>>();
 
             for (int i = 0; i < TeamCount; i++)
             {
                 TeamToGameClientsMapping.Add(i, new List<int>());
             }
-
-            AddGameClientToTeam(0, TheGameRoomsHostClientID);
         }
 
-        public void AddGameClientToTeam(int teamNumber, int gameClientID)
+        public void AddGameClientToTeam(int teamNumber, int gameClientID, bool isHost=false)
         {
             TeamToGameClientsMapping[teamNumber].Add(gameClientID);
+
+            if (isHost)
+            {
+                TheGameRoomsHostClientID = gameClientID;
+            }
         }
 
         public void RemoveGameClientFromTeam(int teamNumber,int clientID)

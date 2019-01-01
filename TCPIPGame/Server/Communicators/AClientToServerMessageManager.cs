@@ -12,7 +12,7 @@ namespace TCPIPGame.Server
         void OnClientMessage_MessageConnectToServerRequest(int clientID, MessageConnectToServerRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageCreateRoomRequest(int clientID, MessageCreateRoomRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageGetGameRoomHostRequest(int clientID, MessageGetGameRoomHostRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
-        void OnClientMessage_MessageGetGameRoomPlayersRequest(int clientID, MessageGetGameRoomHostRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
+        void OnClientMessage_MessageGetGameRoomPlayersRequest(int clientID, MessageGetGameRoomPlayersRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageJoinGameRoomRequest(int clientID, MessageJoinGameRoomRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageSendGameRoomTextMessageRequest(int clientID, MessageSendGameRoomTextMessageRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageGetGameRoomsRequest(int clientID, MessageGetGameRoomsRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);

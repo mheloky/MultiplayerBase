@@ -30,14 +30,13 @@ namespace TCPIPGame.Server
 
         public int CreateRoom(int teamCount, string gameRoomName, int theGameRoomsHostClientID)
         {
-            IDSeed++;
-            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount, gameRoomName, theGameRoomsHostClientID));
+            GameRooms.Add(GenerateManageeID(), new GameRoom(teamCount, gameRoomName));
             return IDSeed;
         }
 
-        public void AddPlayerToGameRoom(int clientID, int roomID, int teamID)
+        public void AddPlayerToGameRoom(int clientID, int roomID, int teamID, bool isHost=false)
         {
-            GameRooms[roomID].AddGameClientToTeam(teamID, clientID);
+            GameRooms[roomID].AddGameClientToTeam(teamID, clientID, isHost);
             GameClientToGameRoomMap.Add(clientID, roomID);
         }
 

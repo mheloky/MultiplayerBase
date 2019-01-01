@@ -23,6 +23,6 @@ namespace TCPIPGame.Server
         event EventHandler<MessageGetGameRoomPlayersRequest> TranslatedMessageGetGamePlayersRequest;
         event EventHandler<MessageJoinGameRoomRequest> TranslatedMessageJoinGameRoomRequest;
         event EventHandler<MessageSendGameRoomTextMessageRequest> TranslatedMessageSendGameRoomTextMessageRequest;
-        event EventHandler<MessageGetGameRoomsRequest> TranslatedGetGameRoomsRequest;
+        event EventHandler<MessageGetGameRoomsRequest> TranslatedMessageGetGameRoomsRequest;
     }
 }
