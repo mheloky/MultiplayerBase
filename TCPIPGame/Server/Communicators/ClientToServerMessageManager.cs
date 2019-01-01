@@ -104,13 +104,10 @@ namespace TCPIPGame.Server
 
         public void SendDataToClients(List<GameClient> theGameClient, AServerMessage data)
         {
-            Serializer serializer = new Serializer();
-            var theData = serializer.ObjectToByteArray(data);
-
             for (int i = 0; i < theGameClient.Count; i++)
             {
                 var client = theGameClient[i];
-                client.TheNetworkStream.Write(theData, 0, theData.Length);     //sending the message
+                SendDataToClient(client, data);  //sending the message
             }
         }
 
