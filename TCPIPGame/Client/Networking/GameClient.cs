@@ -51,6 +51,7 @@ namespace TCPIPGame.Client
         public event EventHandler<MessageJoinGameRoomResponse> OnJoinGameRoomRequestSuccessful;
         public event EventHandler<MessageGetGameRoomsResponse> OnGetGameRoomsRequestSuccessful;
         public event EventHandler<MessageSendGameRoomTextMessageResponse> OnSendGameRoomTextMessageResponseSuccessful;
+        public event EventHandler<MessageSendUserInputResponse> OnSendUserInputResponseSuccessful;
         #endregion
 
         public GameClient()
@@ -79,6 +80,7 @@ namespace TCPIPGame.Client
             TheServerToClientMessageTranslator.Event_OnJoinGameRoomResponseTranslated += TheServerToClientMessageTranslator_Event_OnJoinGameRoomResponseTranslated;
             TheServerToClientMessageTranslator.Event_OnGetGameRoomsResponseTranslated += TheServerToClientMessageTranslator_Event_OnGetGameRoomsResponseTranslated;
             TheServerToClientMessageTranslator.Event_OnSendGameRoomTextMessageResponseTranslated += TheServerToClientMessageTranslator_Event_OnSendGameRoomTextMessageResponseTranslated;
+            TheServerToClientMessageTranslator.Event_OnSendUserInputResponseTranslated += TheServerToClientMessageTranslator_Event_OnSendUserInputResponseTranslated;
         }
 
         #endregion
@@ -139,6 +141,14 @@ namespace TCPIPGame.Client
             if (OnGetGameRoomsRequestSuccessful != null)
             {
                 OnGetGameRoomsRequestSuccessful(null, e);
+            }
+        }
+
+        private void TheServerToClientMessageTranslator_Event_OnSendUserInputResponseTranslated(object sender, MessageSendUserInputResponse e)
+        {
+            if (OnSendUserInputResponseSuccessful != null)
+            {
+                OnSendUserInputResponseSuccessful(null, e);
             }
         }
 

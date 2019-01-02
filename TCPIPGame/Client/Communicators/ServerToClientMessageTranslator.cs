@@ -17,6 +17,7 @@ namespace TCPIPGame.Client
         public event EventHandler<MessageJoinGameRoomResponse> Event_OnJoinGameRoomResponseTranslated;
         public event EventHandler<MessageSendGameRoomTextMessageResponse> Event_OnSendGameRoomTextMessageResponseTranslated;
         public event EventHandler<MessageGetGameRoomsResponse> Event_OnGetGameRoomsResponseTranslated;
+        public event EventHandler<MessageSendUserInputResponse> Event_OnSendUserInputResponseTranslated;
         #endregion
 
         public void TranslateMessage(MessagePreConnectToServerResponse message)
@@ -83,9 +84,19 @@ namespace TCPIPGame.Client
             }
         }
 
+        public void TranslateMessage(MessageSendUserInputResponse message)
+        {
+            if (Event_OnSendUserInputResponseTranslated != null)
+            {
+                Event_OnSendUserInputResponseTranslated(null, message);
+            }
+        }
+
         public void TranslateMessage(AServerMessage message)
         {
             message.Translate(this);
         }
+
+       
     }
 }

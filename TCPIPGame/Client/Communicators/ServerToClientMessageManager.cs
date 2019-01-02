@@ -41,7 +41,6 @@ namespace TCPIPGame.Client
         private void OnReceivedServerMessage(object sender, AServerMessage theServerMessage)
         {
             TheServerToClientMessageTranslator.TranslateMessage(theServerMessage);
-            
         }
 
         public void SendMessageToServer(AClientMessage theClientMessage)

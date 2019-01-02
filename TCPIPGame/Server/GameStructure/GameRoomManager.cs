@@ -50,6 +50,11 @@ namespace TCPIPGame.Server
             return GameClientToGameRoomMap[clientID];
         }
 
+        public int GetTeamFromClientIDAndRoomID(int roomID, int clientID)
+        {
+            return GameRooms[roomID].GetGameTeamIDFromClientID(clientID);
+        }
+
         public int GetGameRoomHostClientIDFromGameRoomID(int gameRoomID)
         {
             return GameRooms[gameRoomID].GetGameRoomHostClientID();

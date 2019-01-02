@@ -57,12 +57,14 @@
     <Compile Include="Messages\GameRoom.cs" />
     <Compile Include="Messages\Requests\MessageGetGameRoomsRequest.cs" />
     <Compile Include="Messages\Requests\MessageSendGameRoomTextMessageRequest.cs" />
+    <Compile Include="Messages\Requests\MessageSendUserInputRequest.cs" />
     <Compile Include="Messages\Requests\MessageGetGameRoomPlayersRequest.cs" />
     <Compile Include="Messages\Requests\MessageGetGameRoomHostRequest.cs" />
     <Compile Include="Messages\Requests\MessageJoinGameRoomRequest.cs" />
     <Compile Include="Messages\Requests\MessageCreateRoomRequest.cs" />
     <Compile Include="Messages\Requests\MessagePreConnectToServerRequest.cs" />
     <Compile Include="Messages\Responses\MessageGetGameRoomsResponse.cs" />
+    <Compile Include="Messages\Responses\MessageSendUserInputResponse.cs" />
     <Compile Include="Messages\Responses\MessageSendGameRoomTextMessageResponse.cs" />
     <Compile Include="Messages\Responses\MessageJoinGameRoomResponse.cs" />
     <Compile Include="Messages\Responses\MessageGetGameRoomPlayersResponse.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Messages\Responses\MessagePreConnectToServerResponse.cs" />
     <Compile Include="Messages\Responses\MessageConnectToServerResponse.cs" />
     <Compile Include="Messages\Requests\MessageConnectToServerRequest.cs" />
+    <Compile Include="Messages\UserInput.cs" />
     <Compile Include="Server\Communicators\AClientToServerListener.cs" />
     <Compile Include="Server\Communicators\AClientToServerMessageManager.cs" />
     <Compile Include="Server\Communicators\ClientToServerListener.cs" />

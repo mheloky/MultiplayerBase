@@ -38,11 +38,18 @@ namespace TCPIPGame.Server
             set;
         }
 
+        Dictionary<int, int> ClientIDToTeamMapping
+        {
+            get;
+            set;
+        }
+
         public GameRoom(int teamCount, string gameRoomName)
         {
             TeamCount = teamCount;
             Name = gameRoomName;
             TeamToGameClientsMapping = new Dictionary<int, List<int>>();
+            ClientIDToTeamMapping = new Dictionary<int, int>();
 
             for (int i = 0; i < TeamCount; i++)
             {
@@ -53,6 +60,7 @@ namespace TCPIPGame.Server
         public void AddGameClientToTeam(int teamNumber, int gameClientID, bool isHost=false)
         {
             TeamToGameClientsMapping[teamNumber].Add(gameClientID);
+            ClientIDToTeamMapping.Add(gameClientID, teamNumber);
 
             if (isHost)
             {
@@ -63,6 +71,7 @@ namespace TCPIPGame.Server
         public void RemoveGameClientFromTeam(int teamNumber,int clientID)
         {
             TeamToGameClientsMapping[teamNumber].Remove(clientID);
+            ClientIDToTeamMapping.Remove(clientID);
         }
 
         public List<int> GetGameClientsInRoom()
@@ -79,6 +88,11 @@ namespace TCPIPGame.Server
         public int GetGameRoomHostClientID()
         {
             return TheGameRoomsHostClientID;
+        }
+
+        public int GetGameTeamIDFromClientID(int clientID)
+        {
+            return ClientIDToTeamMapping[clientID];
         }
 
     }

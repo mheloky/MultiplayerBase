@@ -8,6 +8,7 @@ namespace TCPIPGame.Server.DomainObjects
     public interface APlayer
     {
         int GetClientID();
+        int GetTeamID();
         string GetUserName();
     }
 }

@@ -8,21 +8,10 @@ namespace TCPIPGame.Server.GameStructure
 {
     public class PlayerManager
     {
-        public Player GetPlayerFromClientID(int clientID, GameClientManager gameClientManager)
+        public Player GeneratePlayerFromClientID(int clientID,  int roomID, GameClientManager gameClientManager, GameRoomManager gameRoomManager)
         {
-            return new Player(gameClientManager.GetGameClientFromClientID(clientID).ID, gameClientManager.GetGameClientFromClientID(clientID).Name);
-        }
-
-        public List<APlayer> GetPlayersFromClientIDs(List<int> clientIDs, GameClientManager gameClientManager)
-        {
-            var players = new List<APlayer>();
-            for(int i=0;i<clientIDs.Count;i++)
-            {
-                var theClientID = clientIDs[i];
-                players.Add(GetPlayerFromClientID(theClientID, gameClientManager));
-            }
-
-            return players;
+            var teamID = gameRoomManager.GetTeamFromClientIDAndRoomID(roomID, clientID);
+            return new Player(gameClientManager.GetGameClientFromClientID(clientID).ID, gameClientManager.GetGameClientFromClientID(clientID).Name, teamID);
         }
     }
 }

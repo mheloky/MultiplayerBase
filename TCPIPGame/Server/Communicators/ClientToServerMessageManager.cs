@@ -19,7 +19,7 @@ namespace TCPIPGame.Server
         public void OnClientMessage_MessageCreateRoomRequest(int clientID, MessageCreateRoomRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
         {
             var gameClient = gameClientManager.GetGameClientFromClientID(clientID);
-            var gameRoomHost = new Player(gameClient.ID, gameClient.Name);
+            var gameRoomHost = new Player(gameClient.ID, gameClient.Name,0);
             var  roomID=gameRoomManager.CreateRoom(2, message.RoomName, clientID);
             gameRoomManager.AddPlayerToGameRoom(clientID, roomID, 0,true);
             var messageResponse = new MessageCreateRoomResponse(message.RoomName, roomID, gameRoomHost);
@@ -30,7 +30,7 @@ namespace TCPIPGame.Server
         {
             var roomHostClientID = gameRoomManager.GetGameRoomHostClientIDFromGameRoomID(message.RoomID);
             var client = gameClientManager.GetGameClientFromClientID(roomHostClientID);
-            var gameRoomHost = new Player(client.ID, client.Name);
+            var gameRoomHost = new Player(client.ID, client.Name,0);
             var messageResponse = new MessageGetGameRoomHostResponse(gameRoomHost);
 
             var gameClient = gameClientManager.GetGameClientFromClientID(clientID);
@@ -44,7 +44,7 @@ namespace TCPIPGame.Server
 
             var players = new List<APlayer>();
             var playerManager = new PlayerManager();
-            players.Add(playerManager.GetPlayerFromClientID(roomHostClientID, gameClientManager)); //the first clientID will be the host
+            players.Add(playerManager.GeneratePlayerFromClientID(roomHostClientID, message.RoomID, gameClientManager,gameRoomManager)); //the first clientID will be the host
 
 
             var clientIDs=gameRoomManager.GetGameClientsInRoom(roomID);
@@ -52,7 +52,7 @@ namespace TCPIPGame.Server
             {
                 if(clientIDs[i]!= roomHostClientID)
                 {
-                    players.Add(playerManager.GetPlayerFromClientID(clientIDs[i], gameClientManager));
+                    players.Add(playerManager.GeneratePlayerFromClientID(clientIDs[i],message.RoomID, gameClientManager,gameRoomManager));
                 }
             }
 
@@ -66,7 +66,7 @@ namespace TCPIPGame.Server
             gameRoomManager.AddPlayerToGameRoom(clientID, message.RoomID, 1);
             
             var clientIDs=gameRoomManager.GetGameClientsInRoom(message.RoomID);
-            var playerThatJoined=new PlayerManager().GetPlayerFromClientID(clientID, gameClientManager);
+            var playerThatJoined=new PlayerManager().GeneratePlayerFromClientID(clientID, message.RoomID, gameClientManager,gameRoomManager);
             var theGameClients = gameClientManager.GetGameClientsFromClientIDs(clientIDs.ToList());
 
             SendDataToClients(theGameClients, new MessageJoinGameRoomResponse(playerThatJoined));
@@ -76,7 +76,7 @@ namespace TCPIPGame.Server
         {
             var roomID = gameRoomManager.GetClientRoomID(clientID);
             SendDataToClientsInRoom(roomID, gameRoomManager, gameClientManager, new MessageSendGameRoomTextMessageResponse(clientID, message.TheMessage));
-        }
+        }  
 
         public void OnClientMessage_MessageGetGameRoomsRequest(int clientID, MessageGetGameRoomsRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
         {
@@ -93,6 +93,12 @@ namespace TCPIPGame.Server
             }
 
             SendDataToClient(gameClient, new MessageGetGameRoomsResponse(lightGameRooms));
+        }
+
+        public void OnClientMessage_MessageSendUserInputRequest(int clientID, MessageSendUserInputRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
+        {
+            var roomID = gameRoomManager.GetClientRoomID(clientID);
+            SendDataToClientsInRoom(roomID, gameRoomManager, gameClientManager, new MessageSendUserInputResponse(clientID, message.TheUserInput));
         }
 
         public void SendDataToClient(GameClient theGameClient, AServerMessage data)

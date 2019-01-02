@@ -10,11 +10,13 @@ namespace TCPIPGame.Server.DomainObjects
     {
         private int _clientID;
         private string _userName;
+        private int _teamID;
 
-        public Player(int clientID, string userName)
+        public Player(int clientID, string userName, int teamID)
         {
             _clientID = clientID;
             _userName = userName;
+            _teamID = teamID;
         }
 
         public int GetClientID()
@@ -25,6 +27,11 @@ namespace TCPIPGame.Server.DomainObjects
         public string GetUserName()
         {
             return _userName;
+        }
+
+        public int GetTeamID()
+        {
+            return _teamID;
         }
     }
 }
