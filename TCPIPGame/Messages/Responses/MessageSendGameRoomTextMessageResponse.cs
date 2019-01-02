@@ -11,14 +11,21 @@ namespace TCPIPGame.Messages
     [Serializable]
     public class MessageSendGameRoomTextMessageResponse : AServerMessage
     {
+        public int ClientID
+        {
+            get;
+            private set;
+        }
+
         public string TheMessage
         {
             get;
             private set;
         }
 
-        public MessageSendGameRoomTextMessageResponse(string theMessage)
+        public MessageSendGameRoomTextMessageResponse(int clientID, string theMessage)
         {
+            ClientID = clientID;
             TheMessage = theMessage;
         }
 
