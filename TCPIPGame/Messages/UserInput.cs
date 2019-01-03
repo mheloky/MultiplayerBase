@@ -5,10 +5,23 @@ using System.Text;
 
 namespace TCPIPGame.Messages
 {
-    public enum UserInput
+    public class UserInput
     {
-        Left,
-        Right,
-        Up
+        public float HorizontalAxis
+        {
+            get;
+            set;
+        }
+        public bool Jump
+        {
+            get;
+            set;
+        }
+
+        public UserInput(float horizontalAxis=0, bool jump=false)
+        {
+
+        }
+
     }
 }
