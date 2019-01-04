@@ -10,6 +10,7 @@ namespace TCPIPGame.Client
     interface AServerToClientMessageListener
     {
         event EventHandler<AServerMessage> OnReceivedServerMessage;
+        event Action<int,byte[]> OnReceivedServerLowLevelMessage;
         void ListenAsync(TcpClient theCLient);
     }
 }

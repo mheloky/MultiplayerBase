@@ -101,11 +101,22 @@ namespace TCPIPGame.Server
             SendDataToClientsInRoom(roomID, gameRoomManager, gameClientManager, new MessageSendUserInputResponse(clientID, message.TheUserInput));
         }
 
+        public void OnClientMessage_MessageLowLevelMessageRequest(int clientID, byte[] message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
+        {
+            var roomID = gameRoomManager.GetClientRoomID(clientID);
+            SendDataToClientsInRoom(roomID, gameRoomManager, gameClientManager, message);
+        }
+
         public void SendDataToClient(GameClient theGameClient, AServerMessage data)
         {
             Serializer serializer = new Serializer();
             var theData = serializer.ObjectToByteArray(data);
             theGameClient.TheNetworkStream.Write(theData, 0, theData.Length);     //sending the message
+        }
+
+        public void SendDataToClient(GameClient theGameClient, byte[] data)
+        {
+            theGameClient.TheNetworkStream.Write(data, 0, data.Length);     //sending the message
         }
 
         public void SendDataToClients(List<GameClient> theGameClient, AServerMessage data)
@@ -117,7 +128,24 @@ namespace TCPIPGame.Server
             }
         }
 
+        public void SendDataToClients(List<GameClient> theGameClient, byte[] data)
+        {
+            for (int i = 0; i < theGameClient.Count; i++)
+            {
+                var client = theGameClient[i];
+                SendDataToClient(client, data);  //sending the message
+            }
+        }
+
         public void SendDataToClientsInRoom(int roomID, GameRoomManager gameRoomManager, GameClientManager gameClientManager, AServerMessage data)
+        {
+            var clientIDs = gameRoomManager.GetGameClientsInRoom(roomID);
+            var theGameClients = gameClientManager.GetGameClientsFromClientIDs(clientIDs.ToList());
+
+            SendDataToClients(theGameClients, data);
+        }
+
+        public void SendDataToClientsInRoom(int roomID, GameRoomManager gameRoomManager, GameClientManager gameClientManager, byte[] data)
         {
             var clientIDs = gameRoomManager.GetGameClientsInRoom(roomID);
             var theGameClients = gameClientManager.GetGameClientsFromClientIDs(clientIDs.ToList());

@@ -23,6 +23,7 @@ namespace TCPIPGame.Server
         {
             TcpListener server = new TcpListener(IPAddress.Any, 80);
             TheClientToServerListener.OnClientMessage += Server_OnClientMessage_Translate;
+            TheClientToServerListener.OnLowLevelClientMessage += TheClientToServerListener_OnLowLevelClientMessage;
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageConnectToServerRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageConnectToServerRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageToMessageCreateRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageGetGameRoomHostRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomHostRequest;
@@ -30,6 +31,7 @@ namespace TCPIPGame.Server
             TheClientToServerMeossageTranslator.TranslatedMessageGetGameRoomsRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomsRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageJoinGameRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageJoinGameRoomRequest; ;
             TheClientToServerMeossageTranslator.TranslatedMessageSendGameRoomTextMessageRequest += TheClientToServerMeossageTranslator_TranslatedMessageSendGameRoomTextMessageRequest;
+            TheClientToServerMeossageTranslator.TranslatedLowLevelMessageRequest += TheClientToServerMeossageTranslator_TranslatedLowLevelMessageRequest;
             // we set our IP address as server's address, and we also set the port: 9999
 
             server.Start();  // this will start the server
@@ -79,11 +81,21 @@ namespace TCPIPGame.Server
             TheClientToServerMessenger.OnClientMessage_MessageJoinGameRoomRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
         }
 
+        private void TheClientToServerMeossageTranslator_TranslatedLowLevelMessageRequest(int clientID, byte[] message)
+        {
+            TheClientToServerMessenger.OnClientMessage_MessageLowLevelMessageRequest((int)clientID, message, TheGameRoomManager, TheGameClientManager);
+        }
+
         #region Events
         private void Server_OnClientMessage_Translate(object clientID, AClientMessage clientDataMessage)
         {
             TheClientToServerMeossageTranslator.TranslateMessage((int)clientID, clientDataMessage);
         
+        }
+
+        private void TheClientToServerListener_OnLowLevelClientMessage(int clientID,byte[] obj)
+        {
+            TheClientToServerMeossageTranslator.TranslateMessage(clientID, obj);
         }
         #endregion
     }

@@ -28,7 +28,9 @@ namespace TCPIPGame
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream(data))
             {
+                Console.WriteLine("ByteSize:" + data.Length);
                 object obj = bf.Deserialize(ms);
+                Console.WriteLine("Done");
                 return (T)obj;
             }
         }

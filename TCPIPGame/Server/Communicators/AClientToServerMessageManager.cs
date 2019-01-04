@@ -17,5 +17,6 @@ namespace TCPIPGame.Server
         void OnClientMessage_MessageSendGameRoomTextMessageRequest(int clientID, MessageSendGameRoomTextMessageRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageGetGameRoomsRequest(int clientID, MessageGetGameRoomsRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
         void OnClientMessage_MessageSendUserInputRequest(int clientID, MessageSendUserInputRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
+        void OnClientMessage_MessageLowLevelMessageRequest(int clientID, byte[] message, GameRoomManager gameRoomManager, GameClientManager gameClientManager);
     }
 }

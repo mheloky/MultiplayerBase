@@ -13,6 +13,7 @@ namespace TCPIPGame.Client
     {
         #region Events
         public event EventHandler<AServerMessage> OnReceivedServerMessage;
+        public event Action<int, byte[]> OnReceivedServerLowLevelMessage;
         #endregion
 
         public void ListenAsync(TcpClient TheTcpClient)
@@ -37,13 +38,21 @@ namespace TCPIPGame.Client
                 {
                     var bytesToRead = new byte[TheTcpClient.ReceiveBufferSize];
                     nwStream.Read(bytesToRead, 0, TheTcpClient.ReceiveBufferSize);
-                    var serverMessage = theSerializer.FromByteArray<AServerMessage>(bytesToRead);
 
-                    if (OnReceivedServerMessage != null)
+                    //if low level message
+                    if (bytesToRead.Count(x => x != 0) <= 3)
                     {
-                        OnReceivedServerMessage(null, serverMessage);
+                        OnReceivedServerLowLevelMessage(bytesToRead[0], new byte[] { bytesToRead[1], bytesToRead[2] });
                     }
+                    else
+                    {
+                        var serverMessage = theSerializer.FromByteArray<AServerMessage>(bytesToRead);
 
+                        if (OnReceivedServerMessage != null)
+                        {
+                            OnReceivedServerMessage(null, serverMessage);
+                        }
+                    }
                 }
             }
         }

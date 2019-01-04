@@ -69,6 +69,11 @@ namespace TCPIPGame.Client
             TheServerToClientMessageManager.SendMessageToServer(message);
         }
 
+        public void SendLowLevelMessageToServer(byte[] theBytes)
+        {
+            TheServerToClientMessageManager.SendLowLevelMessageToServer(theBytes);
+        }
+
         #region Helper Methods
         private void SetupEvents()
         {
