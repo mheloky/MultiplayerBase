@@ -31,6 +31,7 @@ namespace TCPIPGame.Server
             TheClientToServerMeossageTranslator.TranslatedMessageGetGameRoomsRequest += TheClientToServerMeossageTranslator_TranslatedMessageGetGameRoomsRequest;
             TheClientToServerMeossageTranslator.TranslatedMessageJoinGameRoomRequest += TheClientToServerMeossageTranslator_TranslatedMessageJoinGameRoomRequest; ;
             TheClientToServerMeossageTranslator.TranslatedMessageSendGameRoomTextMessageRequest += TheClientToServerMeossageTranslator_TranslatedMessageSendGameRoomTextMessageRequest;
+            TheClientToServerMeossageTranslator.TranslatedMessageSendUserInputRequest += TheClientToServerMeossageTranslator_TranslatedMessageSendUserInputRequest;
             TheClientToServerMeossageTranslator.TranslatedLowLevelMessageRequest += TheClientToServerMeossageTranslator_TranslatedLowLevelMessageRequest;
             // we set our IP address as server's address, and we also set the port: 9999
 
@@ -44,6 +45,8 @@ namespace TCPIPGame.Server
                 TheClientToServerListener.ListenToClient(gameClient);
             }
         }
+
+
 
         private void TheClientToServerMeossageTranslator_TranslatedMessageToMessageCreateRoomRequest(object clientID, MessageCreateRoomRequest e)
         {
@@ -84,6 +87,11 @@ namespace TCPIPGame.Server
         private void TheClientToServerMeossageTranslator_TranslatedLowLevelMessageRequest(int clientID, byte[] message)
         {
             TheClientToServerMessenger.OnClientMessage_MessageLowLevelMessageRequest((int)clientID, message, TheGameRoomManager, TheGameClientManager);
+        }
+
+        private void TheClientToServerMeossageTranslator_TranslatedMessageSendUserInputRequest(object clientID, MessageSendUserInputRequest e)
+        {
+            TheClientToServerMessenger.OnClientMessage_MessageSendUserInputRequest((int)clientID, e, TheGameRoomManager, TheGameClientManager);
         }
 
         #region Events

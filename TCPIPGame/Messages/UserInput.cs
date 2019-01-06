@@ -19,10 +19,25 @@ namespace TCPIPGame.Messages
             set;
         }
 
-        public UserInput(float horizontalAxis=0, bool jump=false)
+        public float PositionX
+        {
+            get;
+            set;
+        }
+
+        public float PositionY
+        {
+            get;
+            set;
+        }
+
+        public UserInput(float positionX, float positionY, float horizontalAxis=0, bool jump=false)
         {
             HorizontalAxis = horizontalAxis;
             Jump = jump;
+
+            PositionX = positionX;
+            PositionY = positionY;
         }
 
         public UserInput(byte[] data)

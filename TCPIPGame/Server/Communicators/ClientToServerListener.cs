@@ -21,19 +21,11 @@ namespace TCPIPGame.Server
                 {
                     if (client.TheTcpClient.Connected  /* && client.TheNetworkStream.DataAvailable*/)  //while the client is connected, we look for incoming messages
                     {
-                        byte[] msg = new byte[1024];     //the messages arrive as byte array
-                        var bytesSize=client.TheNetworkStream.Read(msg, 0, msg.Length);   //the same networkstream reads the message sent by the client
-
-                       // byte[] msg2 = new byte[2];     //the messages arrive as byte array
-                        //var bytesSize2 = client.TheNetworkStream.Read(msg2, 0, msg2.Length);
-
-                        if (msg.Count(x=>x!=0) <=2)
+                       // byte[] msg = new byte[1024];     //the messages arrive as byte array
+                        if (client.TheTcpClient.ReceiveBufferSize > 0)
                         {
-                            var extractedByteData = new byte[] { (byte)client.ID, msg[0],msg[1] };
-                            OnLowLevelClientMessage(client.ID, extractedByteData);
-                        }
-                        else if (msg.Any(x => x != 0))
-                        {
+                            var msg = new byte[client.TheTcpClient.ReceiveBufferSize];
+                            client.TheNetworkStream.Read(msg, 0, client.TheTcpClient.ReceiveBufferSize);
                             var message = new Serializer().FromByteArray<AClientMessage>(msg);
 
                             Console.WriteLine(message); //now , we write the message as string
@@ -42,11 +34,15 @@ namespace TCPIPGame.Server
                                 OnClientMessage(client.ID, message);
                             }
                         }
-                        client.TheNetworkStream.Flush();
+                       
                     }
+                    client.TheNetworkStream.Flush();
+
                 }
-            }));
-            listeningThread.IsBackground = true;
+            }))
+            {
+                IsBackground = true
+            };
             listeningThread.Start();
         }
 

@@ -39,20 +39,14 @@ namespace TCPIPGame.Client
                     var bytesToRead = new byte[TheTcpClient.ReceiveBufferSize];
                     nwStream.Read(bytesToRead, 0, TheTcpClient.ReceiveBufferSize);
 
-                    //if low level message
-                    if (bytesToRead.Count(x => x != 0) <= 3)
-                    {
-                        OnReceivedServerLowLevelMessage(bytesToRead[0], new byte[] { bytesToRead[1], bytesToRead[2] });
-                    }
-                    else
-                    {
+                  
                         var serverMessage = theSerializer.FromByteArray<AServerMessage>(bytesToRead);
 
                         if (OnReceivedServerMessage != null)
                         {
                             OnReceivedServerMessage(null, serverMessage);
                         }
-                    }
+                    
                 }
             }
         }
