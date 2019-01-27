@@ -92,7 +92,9 @@
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Server\Networking\Server.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Notes.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\Vision\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll
