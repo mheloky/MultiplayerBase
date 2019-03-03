@@ -52,6 +52,7 @@
     <Compile Include="Client\Networking\GameClient.cs" />
     <Compile Include="Client\Communicators\ServerToClientMessageManager.cs" />
     <Compile Include="Client\Communicators\ServerToClientMessageListener.cs" />
+    <Compile Include="Messages\AGameRoom.cs" />
     <Compile Include="Messages\AServerMessage.cs" />
     <Compile Include="Messages\AClientMessage.cs" />
     <Compile Include="Messages\GameRoom.cs" />
@@ -79,12 +80,12 @@
     <Compile Include="Server\Communicators\ClientToServerListener.cs" />
     <Compile Include="Server\Communicators\ClientToServerMessageManager.cs" />
     <Compile Include="Server\Communicators\ClientToServerMessageTranslator.cs" />
-    <Compile Include="Server\DomainObjects\APlayer.cs" />
+    <Compile Include="Server\DomainObjects\ANetworkPlayer.cs" />
     <Compile Include="Server\GameStructure\GameClientManager.cs" />
-    <Compile Include="Server\DomainObjects\Player.cs" />
+    <Compile Include="Server\DomainObjects\NetworkPlayer.cs" />
     <Compile Include="Server\GameStructure\PlayerManager.cs" />
     <Compile Include="Server\Networking\GameClient.cs" />
-    <Compile Include="Server\DomainObjects\GameRoom.cs" />
+    <Compile Include="Server\DomainObjects\NetworkGameRoom.cs" />
     <Compile Include="Server\GameStructure\GameRoomManager.cs" />
     <Compile Include="Server\GameStructure\IManager.cs" />
     <Compile Include="Server\Communicators\AClientToServerMessageTranslator.cs" />
@@ -97,9 +98,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\Vision\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll
-
-
-</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\mheloky\Documents\GitHub\2DMobaSideScroller\2dPlatformerEngine1\Assets\Assets\$(ProjectName).dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

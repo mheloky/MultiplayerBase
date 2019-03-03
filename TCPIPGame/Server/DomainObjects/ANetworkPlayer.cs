@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TCPIPGame.Server.DomainObjects
 {
-    public interface APlayer
+    public interface ANetworkPlayer
     {
         int GetClientID();
         int GetTeamID();

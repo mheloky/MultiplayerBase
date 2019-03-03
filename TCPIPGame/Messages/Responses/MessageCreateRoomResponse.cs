@@ -23,13 +23,13 @@ namespace TCPIPGame.Messages
             private set;
         }
 
-        public Player TheGameRoomHost
+        public NetworkPlayer TheGameRoomHost
         {
             get;
             private set;
         }
 
-        public MessageCreateRoomResponse(string roomName, int roomID, Player gameRoomHost)
+        public MessageCreateRoomResponse(string roomName, int roomID, NetworkPlayer gameRoomHost)
         {
             RoomName = roomName;
             RoomID = roomID;

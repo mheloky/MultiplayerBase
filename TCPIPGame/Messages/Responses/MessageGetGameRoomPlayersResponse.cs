@@ -11,13 +11,13 @@ namespace TCPIPGame.Messages
     [Serializable]
     public class MessageGetGameRoomPlayersResponse : AServerMessage
     {
-        public List<APlayer> GameRoomPlayers
+        public List<ANetworkPlayer> GameRoomPlayers
         {
             get;
             private set;
         }
 
-        public MessageGetGameRoomPlayersResponse(List<APlayer> gameRoomPlayers)
+        public MessageGetGameRoomPlayersResponse(List<ANetworkPlayer> gameRoomPlayers)
         {
             GameRoomPlayers = gameRoomPlayers;
         }

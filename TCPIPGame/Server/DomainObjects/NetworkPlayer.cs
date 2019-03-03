@@ -6,19 +6,22 @@ using System.Text;
 namespace TCPIPGame.Server.DomainObjects
 {
    [Serializable]
-    public class Player:APlayer
+    public class NetworkPlayer:ANetworkPlayer
     {
+        #region Properties
         private int _clientID;
         private string _userName;
         private int _teamID;
+        #endregion
 
-        public Player(int clientID, string userName, int teamID)
+        public NetworkPlayer(int clientID, string userName, int teamID)
         {
             _clientID = clientID;
             _userName = userName;
             _teamID = teamID;
         }
 
+        #region Helper Methods
         public int GetClientID()
         {
             return _clientID;
@@ -33,5 +36,6 @@ namespace TCPIPGame.Server.DomainObjects
         {
             return _teamID;
         }
+        #endregion
     }
 }

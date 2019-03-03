@@ -19,7 +19,7 @@ namespace TCPIPGame.Server
         public void OnClientMessage_MessageCreateRoomRequest(int clientID, MessageCreateRoomRequest message, GameRoomManager gameRoomManager, GameClientManager gameClientManager)
         {
             var gameClient = gameClientManager.GetGameClientFromClientID(clientID);
-            var gameRoomHost = new Player(gameClient.ID, gameClient.Name,0);
+            var gameRoomHost = new NetworkPlayer(gameClient.ID, gameClient.Name,0);
             var  roomID=gameRoomManager.CreateRoom(2, message.RoomName, clientID);
             gameRoomManager.AddPlayerToGameRoom(clientID, roomID, 0,true);
             var messageResponse = new MessageCreateRoomResponse(message.RoomName, roomID, gameRoomHost);
@@ -30,7 +30,7 @@ namespace TCPIPGame.Server
         {
             var roomHostClientID = gameRoomManager.GetGameRoomHostClientIDFromGameRoomID(message.RoomID);
             var client = gameClientManager.GetGameClientFromClientID(roomHostClientID);
-            var gameRoomHost = new Player(client.ID, client.Name,0);
+            var gameRoomHost = new NetworkPlayer(client.ID, client.Name,0);
             var messageResponse = new MessageGetGameRoomHostResponse(gameRoomHost);
 
             var gameClient = gameClientManager.GetGameClientFromClientID(clientID);
@@ -42,7 +42,7 @@ namespace TCPIPGame.Server
             var roomID = message.RoomID;
             var roomHostClientID = gameRoomManager.GetGameRoomHostClientIDFromGameRoomID(message.RoomID);
 
-            var players = new List<APlayer>();
+            var players = new List<ANetworkPlayer>();
             var playerManager = new PlayerManager();
             players.Add(playerManager.GeneratePlayerFromClientID(roomHostClientID, message.RoomID, gameClientManager,gameRoomManager)); //the first clientID will be the host
 

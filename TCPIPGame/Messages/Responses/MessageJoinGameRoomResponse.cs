@@ -11,13 +11,13 @@ namespace TCPIPGame.Messages
     [Serializable]
     public class MessageJoinGameRoomResponse : AServerMessage
     {
-        public Player ThePlayerThatJoined
+        public NetworkPlayer ThePlayerThatJoined
         {
             get;
             private set;
         }
 
-        public MessageJoinGameRoomResponse(Player playerThatJoined)
+        public MessageJoinGameRoomResponse(NetworkPlayer playerThatJoined)
         {
             ThePlayerThatJoined = playerThatJoined;
         }
