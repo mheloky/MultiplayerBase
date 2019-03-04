@@ -47,7 +47,7 @@ namespace TCPIPGame.Client
 
         private void OnReceivedServerLowLevelMessage(int clientID, byte[] data)
         {
-            var userInput = new UserInput(data);
+            var userInput = new NetworkUserInput(data);
             var message = new MessageSendUserInputResponse(clientID, userInput);
             TheServerToClientMessageTranslator.TranslateMessage(message);
         }

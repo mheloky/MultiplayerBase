@@ -9,13 +9,13 @@ namespace TCPIPGame.Messages
     [Serializable]
     public class MessageSendUserInputRequest : AClientMessage
     {
-        public UserInput TheUserInput
+        public NetworkUserInput TheUserInput
         {
             get;
             set;
         }
 
-        public MessageSendUserInputRequest(UserInput userInput)
+        public MessageSendUserInputRequest(NetworkUserInput userInput)
         {
             TheUserInput = userInput;
         }

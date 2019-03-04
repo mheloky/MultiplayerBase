@@ -6,7 +6,7 @@ using System.Text;
 namespace TCPIPGame.Messages
 {
     [Serializable]
-    public class UserInput
+    public class NetworkUserInput
     {
         public float HorizontalAxis
         {
@@ -31,7 +31,7 @@ namespace TCPIPGame.Messages
             set;
         }
 
-        public UserInput(float positionX, float positionY, float horizontalAxis=0, bool jump=false)
+        public NetworkUserInput(float positionX, float positionY, float horizontalAxis=0, bool jump=false)
         {
             HorizontalAxis = horizontalAxis;
             Jump = jump;
@@ -40,7 +40,7 @@ namespace TCPIPGame.Messages
             PositionY = positionY;
         }
 
-        public UserInput(byte[] data)
+        public NetworkUserInput(byte[] data)
         {
             //Horizontal Axis
             if(data[0]==0)

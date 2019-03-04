@@ -17,13 +17,13 @@ namespace TCPIPGame.Messages
             set;
         }
 
-        public UserInput TheUserInput
+        public NetworkUserInput TheUserInput
         {
             get;
             set;
         }
 
-        public MessageSendUserInputResponse(int clientID, UserInput userInput)
+        public MessageSendUserInputResponse(int clientID, NetworkUserInput userInput)
         {
             ClientID = clientID;
             TheUserInput = userInput;
